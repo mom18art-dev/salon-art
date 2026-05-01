@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Salon Art - لوحة التحكم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Tajawal',sans-serif;direction:rtl;background:#0d0d0d;color:#f0ece4;min-height:100vh;}
+.app{padding-bottom:70px;}
+.header{background:#111;border-bottom:1px solid #1e1e1e;padding:22px 18px 18px;
+  display:flex;align-items:center;justify-content:space-between;max-width:520px;margin:0 auto;}
+.header-left h1{font-size:19px;font-weight:900;}
+.header-left p{font-size:12px;color:#555;margin-top:2px;}
+.badge{background:#c9a84c;color:#0d0d0d;font-weight:900;font-size:13px;padding:5px 14px;border-radius:50px;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:16px 18px 0;max-width:520px;margin:0 auto;}
+.stat{background:#1a1a1a;border:1px solid #222;border-radius:11px;padding:13px 10px;text-align:center;}
+.stat-n{font-size:22px;font-weight:900;color:#c9a84c;}
+.stat-l{font-size:10px;color:#555;margin-top:3px;}
+.section{padding:18px 18px 0;max-width:520px;margin:0 auto;}
+.sec-title{font-size:11px;font-weight:700;color:#444;letter-spacing:2px;margin-bottom:12px;
+  display:flex;align-items:center;justify-content:space-between;}
+.refresh-btn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;
+  color:#777;font-family:'Tajawal',sans-serif;font-size:11px;padding:4px 10px;cursor:pointer;}
+.refresh-btn:hover{border-color:#c9a84c;color:#c9a84c;}
+.day-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
+.day-tabs::-webkit-scrollbar{display:none;}
+.day-tab{background:#1a1a1a;border:1px solid #222;border-radius:8px;
+  padding:7px 13px;color:#555;font-family:'Tajawal',sans-serif;
+  font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.day-tab:hover{color:#aaa;}
+.day-tab.active{background:#c9a84c;border-color:#c9a84c;color:#0d0d0d;font-weight:900;}
+.card{background:#1a1a1a;border:1px solid #222;border-radius:13px;padding:15px 16px;margin-bottom:9px;}
+.card.late{border-color:#e05555;background:#1f1010;}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;}
+.day-badge{font-size:10px;color:#777;background:#222;border-radius:5px;padding:2px 8px;margin-bottom:5px;display:inline-block;}
+.c-name{font-size:16px;font-weight:900;color:#f0ece4;}
+.reminded-tag{font-size:10px;color:#4a8a3a;background:#1a2a1a;border:1px solid #2a4a2a;
+  border-radius:50px;padding:2px 8px;margin-right:6px;}
+.late-tag{font-size:10px;color:#e05555;background:#2a1515;border:1px solid #3d1f1f;
+  border-radius:50px;padding:2px 8px;margin-right:6px;}
+.time-badge{background:#222;border-radius:8px;padding:5px 11px;font-size:13px;font-weight:700;color:#c9a84c;white-space:nowrap;}
+.timer{font-size:11px;color:#e09050;margin-top:4px;text-align:left;}
+.card-info{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:11px;}
+.info-item{font-size:12px;color:#666;}
+.actions{display:flex;gap:7px;}
+.remind-btn{flex:1;background:#c9a84c;color:#0d0d0d;border:none;border-radius:8px;
+  padding:10px 0;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
+.remind-btn:hover:not(:disabled){background:#dbb95a;}
+.remind-btn:disabled{background:#1e2a1a;color:#4a8a3a;cursor:default;border:1px solid #2a3a20;}
+.cancel-btn{background:#2a1515;border:1px solid #3d1f1f;border-radius:8px;
+  padding:10px 14px;color:#e05555;font-family:'Tajawal',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;}
+.cancel-btn:hover{background:#3d1f1f;}
+.auto-cancel-btn{width:100%;background:#e05555;border:none;border-radius:8px;
+  padding:10px;color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;
+  cursor:pointer;margin-top:7px;}
+.auto-cancel-btn:hover{background:#c03030;}
+.msg-box{background:#1a2a1a;border:1px solid #2a4a2a;border-radius:9px;
+  padding:11px 14px;margin-top:8px;font-size:13px;color:#7ac97a;line-height:1.7;display:none;}
+.empty{text-align:center;color:#333;font-size:14px;padding:38px 0;border:1px dashed #222;border-radius:13px;}
+.empty-icon{font-size:34px;margin-bottom:9px;}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  background:#c9a84c;color:#0d0d0d;padding:11px 26px;border-radius:50px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
+  z-index:999;white-space:nowrap;display:none;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="header-left">
+      <h1>✂️ Salon Art</h1>
+      <p>لوحة التحكم • إدارة الحجوزات</p>
+    </div>
+    <div class="badge" id="totalBadge">0 حجز</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l">إجمالي</div></div>
+    <div class="stat"><div class="stat-n" id="st-pending">0</div><div class="stat-l">بانتظار التذكير</div></div>
+    <div class="stat"><div class="stat-n" id="st-reminded">0</div><div class="stat-l">تم التذكير</div></div>
+  </div>
+
+  <div class="section" style="margin-top:20px">
+    <div class="sec-title">
+      <span>الحجوزات</span>
+      <button class="refresh-btn" onclick="loadAndRender()">🔄 تحديث</button>
+    </div>
+    <div class="day-tabs" id="dayTabs"></div>
+    <div id="cardsList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DAYS       = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"];
+const SLOT_ORDER = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
+const STORAGE_KEY = "saloart_bookings_v1";
+const EXPIRE_MS   = 24 * 60 * 60 * 1000;  // 24 ساعة
+const LATE_MS     = 15 * 60 * 1000;        // 15 دقيقة
+
+let bookings   = [];
+let selectedDay = "الكل";
+let previewId   = null;
+
+function loadBookings() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const now = Date.now();
+    // حذف الحجوزات اللي انتهت 24 ساعة
+    bookings = raw.filter(b => (now - b.id) < EXPIRE_MS);
+    saveBookings();
+  } catch { bookings = []; }
+}
+
+function saveBookings() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+}
+
+function minutesSince(id) {
+  return Math.floor((Date.now() - id) / 60000);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+
+function remind(id) {
+  const b = bookings.find(x => x.id === id);
+  if (!b) return;
+  b.reminded = true;
+  previewId = previewId === id ? null : id;
+  saveBookings(); render();
+  showToast(`🔔 تم إرسال تذكير لـ ${b.name}`);
+}
+
+function cancelBooking(id) {
+  const b = bookings.find(x => x.id === id);
+  bookings = bookings.filter(x => x.id !== id);
+  saveBookings();
+  if (previewId === id) previewId = null;
+  render();
+  showToast(`🗑️ تم إلغاء موعد ${b?.name}`);
+}
+
+function autoCancelLate(id) {
+  const b = bookings.find(x => x.id === id);
+  bookings = bookings.filter(x => x.id !== id);
+  saveBookings();
+  render();
+  showToast(`⛔ تم إلغاء حجز ${b?.name} بسبب التأخر`);
+}
+
+function render() {
+  const reminded = bookings.filter(b => b.reminded).length;
+  const now = Date.now();
+
+  document.getElementById('totalBadge').textContent = `${bookings.length} حجز ✂️`;
+  document.getElementById('st-total').textContent    = bookings.length;
+  document.getElementById('st-pending').textContent  = bookings.length - reminded;
+  document.getElementById('st-reminded').textContent = reminded;
+
+  // Day tabs
+  const tabs = document.getElementById('dayTabs');
+  tabs.innerHTML = '';
+  ["الكل", ...DAYS].forEach(d => {
+    const count = d === "الكل" ? bookings.length : bookings.filter(b => b.day === d).length;
+    const btn = document.createElement('button');
+    btn.className = 'day-tab' + (selectedDay === d ? ' active' : '');
+    btn.textContent = d === "الكل" ? `الكل (${bookings.length})` : `${d} (${count})`;
+    btn.onclick = () => { selectedDay = d; render(); };
+    tabs.appendChild(btn);
+  });
+
+  // Filter & sort
+  const filtered = selectedDay === "الكل" ? bookings : bookings.filter(b => b.day === selectedDay);
+  const sorted = [...filtered].sort((a, b) => {
+    if (a.day !== b.day) return DAYS.indexOf(a.day) - DAYS.indexOf(b.day);
+    return SLOT_ORDER.indexOf(a.slot) - SLOT_ORDER.indexOf(b.slot);
+  });
+
+  const list = document.getElementById('cardsList');
+  if (sorted.length === 0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>
+      <div>ما في حجوزات ${selectedDay !== "الكل" ? "ليوم " + selectedDay : ""}</div>
+      <div style="font-size:11px;color:#2a2a2a;margin-top:6px">تتحدث تلقائياً كل 30 ثانية</div></div>`;
+    return;
+  }
+
+  list.innerHTML = sorted.map(b => {
+    const mins = minutesSince(b.id);
+    const isLate = mins >= 15;
+    const timerText = isLate
+      ? `⛔ تأخر ${mins} دقيقة — يمكنك إلغاء حجزه`
+      : mins > 0 ? `⏱️ منذ ${mins} دقيقة` : '';
+
+    return `
+    <div class="card${isLate ? ' late' : ''}">
+      <div class="card-top">
+        <div>
+          <div class="day-badge">📅 ${b.day}</div>
+          <div>
+            <span class="c-name">${b.name}</span>
+            ${b.reminded ? '<span class="reminded-tag">✓ ذُكّر</span>' : ''}
+            ${isLate ? '<span class="late-tag">⚠️ متأخر</span>' : ''}
+          </div>
+          ${timerText ? `<div class="timer">${timerText}</div>` : ''}
+        </div>
+        <div class="time-badge">⏰ ${b.slot}</div>
+      </div>
+      <div class="card-info">
+        <div class="info-item">📞 ${b.phone}</div>
+        <div class="info-item">🕐 حجز الساعة ${b.bookedAt}</div>
+      </div>
+      <div class="actions">
+        <button class="remind-btn" onclick="remind(${b.id})" ${b.reminded ? 'disabled' : ''}>
+          ${b.reminded ? '✓ تم إرسال التذكير' : '🔔 أرسل تذكير قبل ساعة'}
+        </button>
+        <button class="cancel-btn" onclick="cancelBooking(${b.id})">إلغاء</button>
+      </div>
+      ${isLate ? `<button class="auto-cancel-btn" onclick="autoCancelLate(${b.id})">⛔ إلغاء تلقائي بسبب التأخر (${mins} دقيقة)</button>` : ''}
+      <div class="msg-box" id="msg-${b.id}" style="${previewId === b.id ? 'display:block' : 'display:none'}">
+        📱 <strong>نص الرسالة للزبون:</strong><br/>
+        "السلام عليكم ${b.name}، تذكير بموعدك في Salon Art يوم ${b.day} الساعة ${b.slot}. نشوفك قريب! ✂️"
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function loadAndRender() {
+  loadBookings();
+  render();
+}
+
+// Init + auto refresh كل 30 ثانية
+loadAndRender();
+setInterval(loadAndRender, 30000);
+</script>
+</body>
+</html>
