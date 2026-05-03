@@ -9,29 +9,57 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0ece4;min-height:100vh;}
 .app{padding-bottom:80px;}
-.header{background:linear-gradient(160deg,#0d0d0d,#111008);border-bottom:1px solid #1a1a1a;padding:18px 18px 14px;display:flex;align-items:center;justify-content:space-between;max-width:520px;margin:0 auto;}
+.header{background:linear-gradient(160deg,#0d0d0d,#111008);border-bottom:1px solid #1a1a1a;padding:18px 18px 14px;display:flex;align-items:center;justify-content:space-between;max-width:540px;margin:0 auto;}
 .logo-row{display:flex;align-items:center;gap:10px;}
 .logo-sm{width:38px;height:38px;}
 .brand-sm{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:#f0ece4;letter-spacing:2px;}
 .brand-sm span{color:#c9a84c;}
 .header-sub{font-size:11px;color:#333;margin-top:1px;}
 .total-badge{background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;font-weight:900;font-size:13px;padding:6px 16px;border-radius:50px;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 18px 0;max-width:520px;margin:0 auto;}
+
+/* TABS */
+.main-tabs{display:flex;gap:0;max-width:540px;margin:0 auto;border-bottom:1px solid #1a1a1a;}
+.main-tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:700;color:#333;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;}
+.main-tab.active{color:#c9a84c;border-bottom-color:#c9a84c;}
+
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 18px 0;max-width:540px;margin:0 auto;}
 .stat{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:14px 8px;text-align:center;}
-.stat-n{font-size:24px;font-weight:900;color:#c9a84c;}
+.stat-n{font-size:22px;font-weight:900;color:#c9a84c;}
 .stat-l{font-size:10px;color:#333;margin-top:3px;}
-.section{padding:16px 18px 0;max-width:520px;margin:0 auto;}
+
+/* WEEKLY STATS */
+.weekly{padding:14px 18px 0;max-width:540px;margin:0 auto;}
+.week-card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:16px;margin-bottom:10px;}
+.week-title{font-size:12px;color:#555;margin-bottom:12px;letter-spacing:2px;}
+.week-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1a1a1a;}
+.week-row:last-child{border:none;}
+.week-day{font-size:13px;color:#888;}
+.week-count{font-size:13px;font-weight:700;color:#c9a84c;}
+.week-bar-wrap{flex:1;margin:0 12px;background:#1a1a1a;border-radius:4px;height:6px;}
+.week-bar{height:6px;border-radius:4px;background:linear-gradient(to left,#c9a84c,#e8c96a);}
+.revenue-box{background:#111;border:1px solid #c9a84c22;border-radius:12px;padding:16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
+.revenue-box span{font-size:13px;color:#666;}
+.revenue-box strong{font-size:20px;font-weight:900;color:#c9a84c;}
+
+/* SECTION */
+.section{padding:14px 18px 0;max-width:540px;margin:0 auto;}
 .sec-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .sec-title{font-size:10px;font-weight:700;color:#333;letter-spacing:3px;}
 .refresh-btn{background:#111;border:1px solid #1a1a1a;border-radius:6px;color:#444;font-family:'Tajawal',sans-serif;font-size:11px;padding:5px 12px;cursor:pointer;}
 .refresh-btn:hover{border-color:#c9a84c55;color:#c9a84c;}
+
 .day-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
 .day-tabs::-webkit-scrollbar{display:none;}
 .day-tab{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:7px 13px;color:#333;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .18s;}
 .day-tab:hover{color:#888;}
 .day-tab.active{background:#c9a84c;border-color:#c9a84c;color:#0d0d0d;font-weight:900;}
-.card{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:16px;margin-bottom:10px;transition:border-color .2s;}
-.card:hover{border-color:#222;}
+
+/* CARD */
+.card{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:16px;margin-bottom:10px;}
 .card.late{border-color:#c0404033;background:#110808;}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
 .day-badge{font-size:10px;color:#444;background:#1a1a1a;border-radius:5px;padding:2px 8px;margin-bottom:5px;display:inline-block;}
@@ -40,23 +68,39 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .tag-ok{color:#4a9a4a;background:#0a1a0a;border:1px solid #1a3a1a;}
 .tag-late{color:#e05050;background:#1a0808;border:1px solid #3a1010;}
 .time-badge{background:#1a1a1a;border-radius:9px;padding:6px 14px;font-size:14px;font-weight:700;color:#c9a84c;white-space:nowrap;flex-shrink:0;}
-.card-info{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;}
+.service-badge{font-size:11px;color:#888;background:#1a1a1a;border-radius:6px;padding:3px 10px;margin-top:4px;display:inline-block;}
+.price-badge{font-size:11px;color:#4a9a4a;background:#0a1a0a;border:1px solid #1a3a1a;border-radius:6px;padding:3px 10px;margin-top:4px;margin-right:4px;display:inline-block;}
+.card-info{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;margin-top:8px;}
 .info-item{font-size:12px;color:#333;}
 .actions{display:flex;gap:7px;}
 .wa-btn{flex:1;background:linear-gradient(135deg,#128c3a,#1aad48);color:#fff;border:none;border-radius:9px;padding:11px 10px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;}
-.wa-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 16px #128c3a44;}
+.wa-btn:hover:not(:disabled){transform:translateY(-1px);}
 .wa-btn:disabled{background:#0a1a0f;color:#1a4a1a;cursor:default;}
 .cancel-btn{background:#1a0808;border:1px solid #3a1010;border-radius:9px;padding:11px 14px;color:#e05050;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
 .cancel-btn:hover{background:#2a0808;}
 .late-action{width:100%;margin-top:8px;background:#c04040;border:none;border-radius:9px;padding:11px;color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
-.late-action:hover{background:#a03030;}
+
+/* DISABLED DAYS */
+.disable-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;}
+.disable-btn{background:#111;border:1px solid #1a1a1a;border-radius:10px;padding:10px 4px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#555;cursor:pointer;transition:all .18s;text-align:center;width:100%;}
+.disable-btn:hover{border-color:#e05050aa;color:#e05050;}
+.disable-btn.disabled{background:#2a0808;border-color:#e0505055;color:#e05050;}
+.disable-info{font-size:12px;color:#333;margin-bottom:14px;line-height:1.7;}
+
+/* WAITLIST */
+.wait-card{background:#111;border:1px solid #c9a84c22;border-radius:12px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.wait-info{flex:1;}
+.wait-name{font-size:15px;font-weight:700;color:#f0ece4;}
+.wait-detail{font-size:12px;color:#444;margin-top:3px;}
+.notify-btn{background:linear-gradient(135deg,#128c3a,#1aad48);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
+
 .empty{text-align:center;padding:44px 0;border:1px dashed #1a1a1a;border-radius:14px;}
 .empty-icon{font-size:36px;margin-bottom:10px;opacity:.3;}
 .empty p{color:#222;font-size:14px;}
-.empty small{color:#1a1a1a;font-size:11px;margin-top:6px;display:block;}
+
 .loading-screen{position:fixed;inset:0;background:#080808;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;}
 .loading-screen svg{animation:spin 1.5s linear infinite;}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .loading-screen p{margin-top:16px;color:#444;font-size:14px;}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;padding:12px 28px;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;z-index:999;white-space:nowrap;display:none;box-shadow:0 4px 24px #c9a84c55;}
 </style>
@@ -72,6 +116,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 </div>
 
 <div class="app" id="mainApp" style="display:none">
+
   <div class="header">
     <div class="logo-row">
       <svg class="logo-sm" viewBox="0 0 54 54" fill="none">
@@ -94,22 +139,63 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     <div class="total-badge" id="totalBadge">0 حجز</div>
   </div>
 
-  <div class="stats">
-    <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l">إجمالي</div></div>
-    <div class="stat"><div class="stat-n" id="st-pending">0</div><div class="stat-l">لم يُذكَّر</div></div>
-    <div class="stat"><div class="stat-n" id="st-reminded">0</div><div class="stat-l">تم التذكير</div></div>
+  <!-- MAIN TABS -->
+  <div class="main-tabs">
+    <div class="main-tab active" onclick="switchTab('bookings')">📋 الحجوزات</div>
+    <div class="main-tab" onclick="switchTab('stats')">📊 الإحصائيات</div>
+    <div class="main-tab" onclick="switchTab('waitlist')">⏳ الانتظار</div>
+    <div class="main-tab" onclick="switchTab('settings')">⚙️ الإعدادات</div>
   </div>
 
-  <div class="section" style="margin-top:18px">
-    <div class="sec-row">
-      <div class="sec-title">الحجوزات</div>
-      <button class="refresh-btn" onclick="loadAndRender()">🔄 تحديث</button>
+  <!-- BOOKINGS TAB -->
+  <div class="tab-content active" id="tab-bookings">
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l">إجمالي</div></div>
+      <div class="stat"><div class="stat-n" id="st-pending">0</div><div class="stat-l">لم يُذكَّر</div></div>
+      <div class="stat"><div class="stat-n" id="st-reminded">0</div><div class="stat-l">تم التذكير</div></div>
     </div>
-    <div class="day-tabs" id="dayTabs"></div>
-    <div id="cardsList"></div>
+    <div class="section" style="margin-top:16px">
+      <div class="sec-row">
+        <div class="sec-title">الحجوزات</div>
+        <button class="refresh-btn" onclick="loadAndRender()">🔄 تحديث</button>
+      </div>
+      <div class="day-tabs" id="dayTabs"></div>
+      <div id="cardsList"></div>
+    </div>
   </div>
-</div>
 
+  <!-- STATS TAB -->
+  <div class="tab-content" id="tab-stats">
+    <div class="weekly">
+      <div class="week-card">
+        <div class="week-title">حجوزات الأسبوع</div>
+        <div id="weeklyRows"></div>
+      </div>
+      <div class="revenue-box">
+        <span>💰 إجمالي الإيرادات المتوقعة</span>
+        <strong id="totalRevenue">0 د.ع</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- WAITLIST TAB -->
+  <div class="tab-content" id="tab-waitlist">
+    <div class="section" style="margin-top:16px">
+      <div class="sec-title" style="margin-bottom:14px">قائمة الانتظار</div>
+      <div id="waitlistCards"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div class="tab-content" id="tab-settings">
+    <div class="section" style="margin-top:16px">
+      <div class="sec-title" style="margin-bottom:10px">تعطيل يوم</div>
+      <div class="disable-info">اضغط على اليوم لتعطيله أو تفعيله. الأيام المعطلة لن يقدر الزبائن يحجزون فيها.</div>
+      <div class="disable-grid" id="disableGrid"></div>
+    </div>
+  </div>
+
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -117,40 +203,43 @@ const BIN_ID  = '69f53bd4aaba8821975f4502';
 const API_KEY = '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum';
 const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const HEADERS = {'Content-Type':'application/json','X-Master-Key':API_KEY};
-
 const DAYS       = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"];
 const SLOT_ORDER = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
 const SLOT_HOURS = {"5:00 م":17,"6:00 م":18,"7:00 م":19,"8:00 م":20,"9:00 م":21,"10:00 م":22,"11:00 م":23};
 
-let bookings=[], selDay="الكل";
+let data={bookings:[],waitlist:[],disabledDays:[]};
+let selDay="الكل", activeTab="bookings";
 
-async function loadBookings(){
+function formatPrice(p){ return Number(p).toLocaleString('ar-IQ')+' د.ع'; }
+
+async function loadData(){
   try{
     const r=await fetch(API_URL,{headers:{'X-Master-Key':API_KEY}});
     const d=await r.json();
-    bookings=(d.record.bookings||[]).filter(b=>!b.cancelled);
-  }catch{ bookings=[]; }
+    data=d.record;
+    if(!data.bookings) data.bookings=[];
+    if(!data.waitlist) data.waitlist=[];
+    if(!data.disabledDays) data.disabledDays=[];
+  }catch{}
 }
 
-async function saveBookings(){
-  await fetch(API_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify({bookings})});
+async function saveData(){
+  await fetch(API_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(data)});
 }
 
 function isLate(b){
   const now=new Date();
   const todayName=DAYS[(now.getDay()+6)%7];
   if(b.day!==todayName)return false;
-  const h=SLOT_HOURS[b.slot];
-  if(!h)return false;
-  const slotTime=new Date();slotTime.setHours(h,0,0,0);
-  return (now-slotTime)>15*60*1000;
+  const h=SLOT_HOURS[b.slot];if(!h)return false;
+  const st=new Date();st.setHours(h,0,0,0);
+  return (now-st)>15*60*1000;
 }
-
 function lateMin(b){
   const now=new Date();
   const h=SLOT_HOURS[b.slot];if(!h)return 0;
-  const slotTime=new Date();slotTime.setHours(h,0,0,0);
-  return Math.floor((now-slotTime)/60000);
+  const st=new Date();st.setHours(h,0,0,0);
+  return Math.floor((now-st)/60000);
 }
 
 function showToast(msg){
@@ -159,54 +248,86 @@ function showToast(msg){
   setTimeout(()=>t.style.display='none',3000);
 }
 
-function openWA(phone,name,day,slot){
+function switchTab(tab){
+  activeTab=tab;
+  document.querySelectorAll('.main-tab').forEach((el,i)=>{
+    el.classList.toggle('active',['bookings','stats','waitlist','settings'][i]===tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  render();
+}
+
+function openWA(phone,msg){
   const clean=phone.replace(/\D/g,'');
   const intl=clean.startsWith('0')?'964'+clean.slice(1):clean;
-  const msg=`السلام عليكم ${name} 👋\n\nتذكير بموعدك في *Salon Art* ✂️\n📅 يوم: *${day}*\n⏰ الساعة: *${slot}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي الحجز تلقائياً.\n\nنشوفك قريب! 🌟`;
   window.open(`https://wa.me/${intl}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
 async function remind(id){
-  const b=bookings.find(x=>x.id===id);if(!b)return;
+  const b=data.bookings.find(x=>x.id===id);if(!b)return;
   b.reminded=true;
-  await saveBookings();
-  openWA(b.phone,b.name,b.day,b.slot);
+  await saveData();
+  const msg=`السلام عليكم ${b.name} 👋\n\n🔔 *تذكير بموعدك في Salon Art*\n\n✂️ الخدمة: *${b.service}*\n📅 اليوم: *${b.day}*\n⏰ الساعة: *${b.slot}*\n💰 السعر: *${formatPrice(b.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.\n\nنشوفك قريب! 🌟`;
+  openWA(b.phone,msg);
   render();
-  showToast(`✅ فُتح واتساب لـ ${b.name}`);
+  showToast(`✅ تم إرسال تذكير لـ ${b.name}`);
 }
 
 async function cancelBooking(id){
-  const b=bookings.find(x=>x.id===id);
-  bookings=bookings.filter(x=>x.id!==id);
-  await saveBookings();render();
+  const b=data.bookings.find(x=>x.id===id);
+  data.bookings=data.bookings.filter(x=>x.id!==id);
+  await saveData();render();
   showToast(`🗑️ تم إلغاء موعد ${b?.name}`);
 }
 
 async function cancelLate(id){
-  const b=bookings.find(x=>x.id===id);
-  bookings=bookings.filter(x=>x.id!==id);
-  await saveBookings();render();
+  const b=data.bookings.find(x=>x.id===id);
+  data.bookings=data.bookings.filter(x=>x.id!==id);
+  await saveData();render();
   showToast(`⛔ أُلغي حجز ${b?.name} بسبب التأخر`);
 }
 
-function render(){
-  const reminded=bookings.filter(b=>b.reminded).length;
-  document.getElementById('totalBadge').textContent=`${bookings.length} حجز`;
-  document.getElementById('st-total').textContent=bookings.length;
-  document.getElementById('st-pending').textContent=bookings.length-reminded;
+async function notifyWait(id){
+  const w=data.waitlist.find(x=>x.id===id);if(!w)return;
+  const msg=`السلام عليكم ${w.name} 👋\n\n🎉 *تفرغ وقت في Salon Art ليوم ${w.day}!*\n\nروح احجز الحين قبل ما يمتلئ:\n👉 mom18art-dev.github.io/salon-art/customer.html\n\nSalon Art ✂️`;
+  openWA(w.phone,msg);
+  data.waitlist=data.waitlist.filter(x=>x.id!==id);
+  await saveData();render();
+  showToast(`✅ تم إبلاغ ${w.name}`);
+}
+
+async function toggleDay(day){
+  if(!data.disabledDays) data.disabledDays=[];
+  if(data.disabledDays.includes(day)){
+    data.disabledDays=data.disabledDays.filter(d=>d!==day);
+    showToast(`✅ تم تفعيل يوم ${day}`);
+  }else{
+    data.disabledDays.push(day);
+    showToast(`🚫 تم تعطيل يوم ${day}`);
+  }
+  await saveData();render();
+}
+
+function renderBookings(){
+  const active=data.bookings.filter(b=>!b.cancelled);
+  const reminded=active.filter(b=>b.reminded).length;
+  document.getElementById('totalBadge').textContent=`${active.length} حجز`;
+  document.getElementById('st-total').textContent=active.length;
+  document.getElementById('st-pending').textContent=active.length-reminded;
   document.getElementById('st-reminded').textContent=reminded;
 
   const tabs=document.getElementById('dayTabs');tabs.innerHTML='';
   ["الكل",...DAYS].forEach(d=>{
-    const cnt=d==="الكل"?bookings.length:bookings.filter(b=>b.day===d).length;
+    const cnt=d==="الكل"?active.length:active.filter(b=>b.day===d).length;
     const btn=document.createElement('button');
     btn.className='day-tab'+(selDay===d?' active':'');
     btn.textContent=`${d} (${cnt})`;
-    btn.onclick=()=>{selDay=d;render();};
+    btn.onclick=()=>{selDay=d;renderBookings();};
     tabs.appendChild(btn);
   });
 
-  const filtered=selDay==="الكل"?bookings:bookings.filter(b=>b.day===selDay);
+  const filtered=selDay==="الكل"?active:active.filter(b=>b.day===selDay);
   const sorted=[...filtered].sort((a,b)=>{
     if(a.day!==b.day)return DAYS.indexOf(a.day)-DAYS.indexOf(b.day);
     return SLOT_ORDER.indexOf(a.slot)-SLOT_ORDER.indexOf(b.slot);
@@ -216,33 +337,32 @@ function render(){
 
   const list=document.getElementById('cardsList');
   if(!sorted.length){
-    list.innerHTML=`<div class="empty"><div class="empty-icon">✂️</div><p>ما في حجوزات ${selDay!=="الكل"?"ليوم "+selDay:""}</p><small>تتحدث تلقائياً كل دقيقة</small></div>`;
+    list.innerHTML=`<div class="empty"><div class="empty-icon">✂️</div><p>ما في حجوزات ${selDay!=="الكل"?"ليوم "+selDay:""}</p></div>`;
     return;
   }
-
   list.innerHTML=sorted.map(b=>{
-    const late=isLate(b);
-    const mins=late?lateMin(b):0;
-    return `
-    <div class="card${late?' late':''}">
+    const late=isLate(b);const mins=late?lateMin(b):0;
+    return `<div class="card${late?' late':''}">
       <div class="card-top">
         <div style="flex:1;min-width:0">
           <div class="day-badge">📅 ${b.day}</div>
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:3px">
-            <span class="c-name">${b.name}</span>
-            ${b.reminded?'<span class="tag tag-ok">✓ ذُكِّر</span>':''}
-            ${late?`<span class="tag tag-late">⚠️ تأخر ${mins} د</span>`:''}
+          <div><span class="c-name">${b.name}</span>
+          ${b.reminded?'<span class="tag tag-ok">✓ ذُكِّر</span>':''}
+          ${late?`<span class="tag tag-late">⚠️ تأخر ${mins}د</span>`:''}</div>
+          <div style="margin-top:5px">
+            <span class="service-badge">${b.service||''}</span>
+            <span class="price-badge">💰 ${formatPrice(b.price||0)}</span>
           </div>
         </div>
         <div class="time-badge" style="margin-right:8px">⏰ ${b.slot}</div>
       </div>
       <div class="card-info">
         <div class="info-item">📞 ${b.phone}</div>
-        <div class="info-item">🕐 حجز الساعة ${b.bookedAt}</div>
+        <div class="info-item">🕐 ${b.bookedAt}</div>
       </div>
       <div class="actions">
         <button class="wa-btn" onclick="remind('${b.id}')" ${b.reminded?'disabled':''}>
-          ${waIcon} ${b.reminded?'تم إرسال التذكير':'أرسل تذكير واتساب'}
+          ${waIcon} ${b.reminded?'تم التذكير':'أرسل تذكير'}
         </button>
         <button class="cancel-btn" onclick="cancelBooking('${b.id}')">إلغاء</button>
       </div>
@@ -251,9 +371,59 @@ function render(){
   }).join('');
 }
 
-async function loadAndRender(){
-  await loadBookings();render();
+function renderStats(){
+  const active=data.bookings.filter(b=>!b.cancelled);
+  const totalRevenue=active.reduce((s,b)=>s+(b.price||0),0);
+  document.getElementById('totalRevenue').textContent=totalRevenue.toLocaleString('ar-IQ')+' د.ع';
+  const max=Math.max(...DAYS.map(d=>active.filter(b=>b.day===d).length),1);
+  document.getElementById('weeklyRows').innerHTML=DAYS.map(d=>{
+    const cnt=active.filter(b=>b.day===d).length;
+    const rev=active.filter(b=>b.day===d).reduce((s,b)=>s+(b.price||0),0);
+    const pct=Math.round((cnt/max)*100);
+    return `<div class="week-row">
+      <span class="week-day">${d}</span>
+      <div class="week-bar-wrap"><div class="week-bar" style="width:${pct}%"></div></div>
+      <span class="week-count">${cnt} حجز${rev>0?' • '+rev.toLocaleString():''}  </span>
+    </div>`;
+  }).join('');
 }
+
+function renderWaitlist(){
+  const list=document.getElementById('waitlistCards');
+  if(!data.waitlist||!data.waitlist.length){
+    list.innerHTML=`<div class="empty"><div class="empty-icon">⏳</div><p>قائمة الانتظار فارغة</p></div>`;
+    return;
+  }
+  list.innerHTML=data.waitlist.map(w=>`
+    <div class="wait-card">
+      <div class="wait-info">
+        <div class="wait-name">${w.name}</div>
+        <div class="wait-detail">📞 ${w.phone} • 📅 ${w.day}</div>
+      </div>
+      <button class="notify-btn" onclick="notifyWait('${w.id}')">📲 أبلغه</button>
+    </div>`).join('');
+}
+
+function renderSettings(){
+  const g=document.getElementById('disableGrid');g.innerHTML='';
+  DAYS.forEach(d=>{
+    const disabled=(data.disabledDays||[]).includes(d);
+    const btn=document.createElement('button');
+    btn.className='disable-btn'+(disabled?' disabled':'');
+    btn.textContent=disabled?`${d} 🚫`:d;
+    btn.onclick=()=>toggleDay(d);
+    g.appendChild(btn);
+  });
+}
+
+function render(){
+  if(activeTab==='bookings') renderBookings();
+  else if(activeTab==='stats') renderStats();
+  else if(activeTab==='waitlist') renderWaitlist();
+  else if(activeTab==='settings') renderSettings();
+}
+
+async function loadAndRender(){ await loadData(); render(); }
 
 (async()=>{
   await loadAndRender();
