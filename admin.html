@@ -16,53 +16,32 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .brand-sm span{color:#c9a84c;}
 .header-sub{font-size:11px;color:#333;margin-top:1px;}
 .total-badge{background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;font-weight:900;font-size:13px;padding:6px 16px;border-radius:50px;}
-
-/* TABS */
-.main-tabs{display:flex;gap:0;max-width:540px;margin:0 auto;border-bottom:1px solid #1a1a1a;}
-.main-tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:700;color:#333;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;}
+.main-tabs{display:flex;max-width:540px;margin:0 auto;border-bottom:1px solid #1a1a1a;}
+.main-tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:700;color:#333;cursor:pointer;border-bottom:2px solid transparent;}
 .main-tab.active{color:#c9a84c;border-bottom-color:#c9a84c;}
-
 .tab-content{display:none;}
 .tab-content.active{display:block;}
-
-/* STATS */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 18px 0;max-width:540px;margin:0 auto;}
 .stat{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:14px 8px;text-align:center;}
 .stat-n{font-size:22px;font-weight:900;color:#c9a84c;}
 .stat-l{font-size:10px;color:#333;margin-top:3px;}
-
-/* WEEKLY STATS */
-.weekly{padding:14px 18px 0;max-width:540px;margin:0 auto;}
-.week-card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:16px;margin-bottom:10px;}
-.week-title{font-size:12px;color:#555;margin-bottom:12px;letter-spacing:2px;}
-.week-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1a1a1a;}
-.week-row:last-child{border:none;}
-.week-day{font-size:13px;color:#888;}
-.week-count{font-size:13px;font-weight:700;color:#c9a84c;}
-.week-bar-wrap{flex:1;margin:0 12px;background:#1a1a1a;border-radius:4px;height:6px;}
-.week-bar{height:6px;border-radius:4px;background:linear-gradient(to left,#c9a84c,#e8c96a);}
-.revenue-box{background:#111;border:1px solid #c9a84c22;border-radius:12px;padding:16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
-.revenue-box span{font-size:13px;color:#666;}
-.revenue-box strong{font-size:20px;font-weight:900;color:#c9a84c;}
-
-/* SECTION */
 .section{padding:14px 18px 0;max-width:540px;margin:0 auto;}
 .sec-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .sec-title{font-size:10px;font-weight:700;color:#333;letter-spacing:3px;}
 .refresh-btn{background:#111;border:1px solid #1a1a1a;border-radius:6px;color:#444;font-family:'Tajawal',sans-serif;font-size:11px;padding:5px 12px;cursor:pointer;}
 .refresh-btn:hover{border-color:#c9a84c55;color:#c9a84c;}
 
-.day-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
-.day-tabs::-webkit-scrollbar{display:none;}
-.day-tab{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:7px 13px;color:#333;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .18s;}
-.day-tab:hover{color:#888;}
-.day-tab.active{background:#c9a84c;border-color:#c9a84c;color:#0d0d0d;font-weight:900;}
+/* Date tabs */
+.date-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
+.date-tabs::-webkit-scrollbar{display:none;}
+.date-tab{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:7px 13px;color:#333;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.date-tab:hover{color:#888;}
+.date-tab.active{background:#c9a84c;border-color:#c9a84c;color:#0d0d0d;font-weight:900;}
 
-/* CARD */
 .card{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:16px;margin-bottom:10px;}
 .card.late{border-color:#c0404033;background:#110808;}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
-.day-badge{font-size:10px;color:#444;background:#1a1a1a;border-radius:5px;padding:2px 8px;margin-bottom:5px;display:inline-block;}
+.date-badge{font-size:10px;color:#444;background:#1a1a1a;border-radius:5px;padding:2px 8px;margin-bottom:5px;display:inline-block;}
 .c-name{font-size:17px;font-weight:900;color:#f0ece4;}
 .tag{font-size:10px;border-radius:50px;padding:2px 9px;margin-right:4px;display:inline-block;margin-top:3px;}
 .tag-ok{color:#4a9a4a;background:#0a1a0a;border:1px solid #1a3a1a;}
@@ -73,31 +52,47 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .card-info{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;margin-top:8px;}
 .info-item{font-size:12px;color:#333;}
 .actions{display:flex;gap:7px;}
-.wa-btn{flex:1;background:linear-gradient(135deg,#128c3a,#1aad48);color:#fff;border:none;border-radius:9px;padding:11px 10px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;}
-.wa-btn:hover:not(:disabled){transform:translateY(-1px);}
+.wa-btn{flex:1;background:linear-gradient(135deg,#128c3a,#1aad48);color:#fff;border:none;border-radius:9px;padding:11px 10px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
 .wa-btn:disabled{background:#0a1a0f;color:#1a4a1a;cursor:default;}
 .cancel-btn{background:#1a0808;border:1px solid #3a1010;border-radius:9px;padding:11px 14px;color:#e05050;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
-.cancel-btn:hover{background:#2a0808;}
 .late-action{width:100%;margin-top:8px;background:#c04040;border:none;border-radius:9px;padding:11px;color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
 
-/* DISABLED DAYS */
-.disable-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;}
-.disable-btn{background:#111;border:1px solid #1a1a1a;border-radius:10px;padding:10px 4px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;color:#555;cursor:pointer;transition:all .18s;text-align:center;width:100%;}
-.disable-btn:hover{border-color:#e05050aa;color:#e05050;}
-.disable-btn.disabled{background:#2a0808;border-color:#e0505055;color:#e05050;}
-.disable-info{font-size:12px;color:#333;margin-bottom:14px;line-height:1.7;}
+/* Weekly stats */
+.weekly{padding:14px 18px 0;max-width:540px;margin:0 auto;}
+.week-card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:16px;margin-bottom:10px;}
+.week-title{font-size:12px;color:#555;margin-bottom:12px;letter-spacing:2px;}
+.week-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1a1a1a;}
+.week-row:last-child{border:none;}
+.week-day{font-size:12px;color:#666;min-width:90px;}
+.week-count{font-size:12px;font-weight:700;color:#c9a84c;white-space:nowrap;}
+.week-bar-wrap{flex:1;margin:0 10px;background:#1a1a1a;border-radius:4px;height:5px;}
+.week-bar{height:5px;border-radius:4px;background:linear-gradient(to left,#c9a84c,#e8c96a);}
+.revenue-box{background:#111;border:1px solid #c9a84c22;border-radius:12px;padding:16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
+.revenue-box span{font-size:13px;color:#666;}
+.revenue-box strong{font-size:20px;font-weight:900;color:#c9a84c;}
 
-/* WAITLIST */
+/* Waitlist */
 .wait-card{background:#111;border:1px solid #c9a84c22;border-radius:12px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
-.wait-info{flex:1;}
 .wait-name{font-size:15px;font-weight:700;color:#f0ece4;}
 .wait-detail{font-size:12px;color:#444;margin-top:3px;}
 .notify-btn{background:linear-gradient(135deg,#128c3a,#1aad48);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
 
+/* Disable days */
+.disable-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
+.disable-scroll::-webkit-scrollbar{display:none;}
+.disable-card{flex-shrink:0;width:64px;background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;}
+.disable-card.off{background:#2a0808;border-color:#e0505055;}
+.disable-dname{font-size:10px;color:#555;display:block;margin-bottom:3px;}
+.disable-card.off .disable-dname{color:#e05050;}
+.disable-dnum{font-size:18px;font-weight:900;color:#333;display:block;}
+.disable-card.off .disable-dnum{color:#e05050;}
+.disable-dmonth{font-size:9px;color:#333;display:block;margin-top:2px;}
+.disable-card.off .disable-dmonth{color:#e0505088;}
+.disable-info{font-size:12px;color:#333;margin-bottom:14px;line-height:1.7;}
+
 .empty{text-align:center;padding:44px 0;border:1px dashed #1a1a1a;border-radius:14px;}
 .empty-icon{font-size:36px;margin-bottom:10px;opacity:.3;}
 .empty p{color:#222;font-size:14px;}
-
 .loading-screen{position:fixed;inset:0;background:#080808;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;}
 .loading-screen svg{animation:spin 1.5s linear infinite;}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
@@ -116,7 +111,6 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 </div>
 
 <div class="app" id="mainApp" style="display:none">
-
   <div class="header">
     <div class="logo-row">
       <svg class="logo-sm" viewBox="0 0 54 54" fill="none">
@@ -139,7 +133,6 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     <div class="total-badge" id="totalBadge">0 حجز</div>
   </div>
 
-  <!-- MAIN TABS -->
   <div class="main-tabs">
     <div class="main-tab active" onclick="switchTab('bookings')">📋 الحجوزات</div>
     <div class="main-tab" onclick="switchTab('stats')">📊 الإحصائيات</div>
@@ -147,7 +140,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     <div class="main-tab" onclick="switchTab('settings')">⚙️ الإعدادات</div>
   </div>
 
-  <!-- BOOKINGS TAB -->
+  <!-- BOOKINGS -->
   <div class="tab-content active" id="tab-bookings">
     <div class="stats">
       <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l">إجمالي</div></div>
@@ -159,26 +152,26 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
         <div class="sec-title">الحجوزات</div>
         <button class="refresh-btn" onclick="loadAndRender()">🔄 تحديث</button>
       </div>
-      <div class="day-tabs" id="dayTabs"></div>
+      <div class="date-tabs" id="dateTabs"></div>
       <div id="cardsList"></div>
     </div>
   </div>
 
-  <!-- STATS TAB -->
+  <!-- STATS -->
   <div class="tab-content" id="tab-stats">
     <div class="weekly">
       <div class="week-card">
-        <div class="week-title">حجوزات الأسبوع</div>
+        <div class="week-title">الإحصائيات (7 أيام قادمة)</div>
         <div id="weeklyRows"></div>
       </div>
       <div class="revenue-box">
-        <span>💰 إجمالي الإيرادات المتوقعة</span>
+        <span>إجمالي الإيرادات المتوقعة</span>
         <strong id="totalRevenue">0 د.ع</strong>
       </div>
     </div>
   </div>
 
-  <!-- WAITLIST TAB -->
+  <!-- WAITLIST -->
   <div class="tab-content" id="tab-waitlist">
     <div class="section" style="margin-top:16px">
       <div class="sec-title" style="margin-bottom:14px">قائمة الانتظار</div>
@@ -186,16 +179,16 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     </div>
   </div>
 
-  <!-- SETTINGS TAB -->
+  <!-- SETTINGS -->
   <div class="tab-content" id="tab-settings">
     <div class="section" style="margin-top:16px">
       <div class="sec-title" style="margin-bottom:10px">تعطيل يوم</div>
       <div class="disable-info">اضغط على اليوم لتعطيله أو تفعيله. الأيام المعطلة لن يقدر الزبائن يحجزون فيها.</div>
-      <div class="disable-grid" id="disableGrid"></div>
+      <div class="disable-scroll" id="disableScroll"></div>
     </div>
   </div>
-
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -203,20 +196,30 @@ const BIN_ID  = '69f53bd4aaba8821975f4502';
 const API_KEY = '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum';
 const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const HEADERS = {'Content-Type':'application/json','X-Master-Key':API_KEY};
-const DAYS       = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"];
-const SLOT_ORDER = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
-const SLOT_HOURS = {"5:00 م":17,"6:00 م":18,"7:00 م":19,"8:00 م":20,"9:00 م":21,"10:00 م":22,"11:00 م":23};
+const DAY_NAMES   = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const MONTH_NAMES = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const SLOT_ORDER  = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
+const SLOT_HOURS  = {"5:00 م":17,"6:00 م":18,"7:00 م":19,"8:00 م":20,"9:00 م":21,"10:00 م":22,"11:00 م":23};
 
 let data={bookings:[],waitlist:[],disabledDays:[]};
-let selDay="الكل", activeTab="bookings";
+let selDateKey="all", activeTab="bookings";
 
+function makeDateKey(d){ return d.toISOString().split('T')[0]; }
+function makeLabel(d){ return `${DAY_NAMES[d.getDay()]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`; }
 function formatPrice(p){ return Number(p).toLocaleString('ar-IQ')+' د.ع'; }
+
+function getNext7Days(){
+  const days=[];const today=new Date();today.setHours(0,0,0,0);
+  for(let i=0;i<7;i++){const d=new Date(today);d.setDate(today.getDate()+i);days.push(d);}
+  return days;
+}
+
+function todayKey(){ return makeDateKey(new Date()); }
 
 async function loadData(){
   try{
     const r=await fetch(API_URL,{headers:{'X-Master-Key':API_KEY}});
-    const d=await r.json();
-    data=d.record;
+    const d=await r.json();data=d.record;
     if(!data.bookings) data.bookings=[];
     if(!data.waitlist) data.waitlist=[];
     if(!data.disabledDays) data.disabledDays=[];
@@ -227,14 +230,18 @@ async function saveData(){
   await fetch(API_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(data)});
 }
 
+// التأخر يحسب بالتاريخ والوقت الحقيقي
 function isLate(b){
   const now=new Date();
-  const todayName=DAYS[(now.getDay()+6)%7];
-  if(b.day!==todayName)return false;
-  const h=SLOT_HOURS[b.slot];if(!h)return false;
-  const st=new Date();st.setHours(h,0,0,0);
-  return (now-st)>15*60*1000;
+  const bDate=b.dateKey||null;
+  if(!bDate) return false;
+  const todayStr=todayKey();
+  if(bDate!==todayStr) return false; // يوم ثاني مو متأخر
+  const h=SLOT_HOURS[b.slot];if(!h) return false;
+  const slotTime=new Date();slotTime.setHours(h,0,0,0);
+  return (now-slotTime)>15*60*1000;
 }
+
 function lateMin(b){
   const now=new Date();
   const h=SLOT_HOURS[b.slot];if(!h)return 0;
@@ -266,45 +273,40 @@ function openWA(phone,msg){
 
 async function remind(id){
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
-  b.reminded=true;
-  await saveData();
-  const msg=`السلام عليكم ${b.name} 👋\n\n🔔 *تذكير بموعدك في Salon Art*\n\n✂️ الخدمة: *${b.service}*\n📅 اليوم: *${b.day}*\n⏰ الساعة: *${b.slot}*\n💰 السعر: *${formatPrice(b.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.\n\nنشوفك قريب! 🌟`;
-  openWA(b.phone,msg);
-  render();
+  b.reminded=true;await saveData();
+  const msg=`السلام عليكم ${b.name} 👋\n\n🔔 *تذكير بموعدك في Salon Art*\n\n✂️ الخدمة: *${b.service}*\n📅 التاريخ: *${b.dateLabel||b.day}*\n⏰ الساعة: *${b.slot}*\n💰 السعر: *${formatPrice(b.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.\n\nنشوفك قريب! 🌟`;
+  openWA(b.phone,msg);render();
   showToast(`✅ تم إرسال تذكير لـ ${b.name}`);
 }
 
 async function cancelBooking(id){
   const b=data.bookings.find(x=>x.id===id);
   data.bookings=data.bookings.filter(x=>x.id!==id);
-  await saveData();render();
-  showToast(`🗑️ تم إلغاء موعد ${b?.name}`);
+  await saveData();render();showToast(`🗑️ تم إلغاء موعد ${b?.name}`);
 }
 
 async function cancelLate(id){
   const b=data.bookings.find(x=>x.id===id);
   data.bookings=data.bookings.filter(x=>x.id!==id);
-  await saveData();render();
-  showToast(`⛔ أُلغي حجز ${b?.name} بسبب التأخر`);
+  await saveData();render();showToast(`⛔ أُلغي حجز ${b?.name} بسبب التأخر`);
 }
 
 async function notifyWait(id){
   const w=data.waitlist.find(x=>x.id===id);if(!w)return;
-  const msg=`السلام عليكم ${w.name} 👋\n\n🎉 *تفرغ وقت في Salon Art ليوم ${w.day}!*\n\nروح احجز الحين قبل ما يمتلئ:\n👉 mom18art-dev.github.io/salon-art/customer.html\n\nSalon Art ✂️`;
+  const msg=`السلام عليكم ${w.name} 👋\n\n🎉 *تفرغ وقت في Salon Art ليوم ${w.day}!*\n\nاحجز الحين:\n👉 mom18art-dev.github.io/salon-art/customer.html\n\nSalon Art ✂️`;
   openWA(w.phone,msg);
   data.waitlist=data.waitlist.filter(x=>x.id!==id);
-  await saveData();render();
-  showToast(`✅ تم إبلاغ ${w.name}`);
+  await saveData();render();showToast(`✅ تم إبلاغ ${w.name}`);
 }
 
-async function toggleDay(day){
+async function toggleDay(key){
   if(!data.disabledDays) data.disabledDays=[];
-  if(data.disabledDays.includes(day)){
-    data.disabledDays=data.disabledDays.filter(d=>d!==day);
-    showToast(`✅ تم تفعيل يوم ${day}`);
+  if(data.disabledDays.includes(key)){
+    data.disabledDays=data.disabledDays.filter(d=>d!==key);
+    showToast('✅ تم تفعيل اليوم');
   }else{
-    data.disabledDays.push(day);
-    showToast(`🚫 تم تعطيل يوم ${day}`);
+    data.disabledDays.push(key);
+    showToast('🚫 تم تعطيل اليوم');
   }
   await saveData();render();
 }
@@ -317,19 +319,27 @@ function renderBookings(){
   document.getElementById('st-pending').textContent=active.length-reminded;
   document.getElementById('st-reminded').textContent=reminded;
 
-  const tabs=document.getElementById('dayTabs');tabs.innerHTML='';
-  ["الكل",...DAYS].forEach(d=>{
-    const cnt=d==="الكل"?active.length:active.filter(b=>b.day===d).length;
+  // Date tabs from 7 days
+  const days=getNext7Days();
+  const tabs=document.getElementById('dateTabs');tabs.innerHTML='';
+  const allBtn=document.createElement('button');
+  allBtn.className='date-tab'+(selDateKey==='all'?' active':'');
+  allBtn.textContent=`الكل (${active.length})`;
+  allBtn.onclick=()=>{selDateKey='all';renderBookings();};
+  tabs.appendChild(allBtn);
+  days.forEach(d=>{
+    const key=makeDateKey(d);
+    const cnt=active.filter(b=>b.dateKey===key).length;
     const btn=document.createElement('button');
-    btn.className='day-tab'+(selDay===d?' active':'');
-    btn.textContent=`${d} (${cnt})`;
-    btn.onclick=()=>{selDay=d;renderBookings();};
+    btn.className='date-tab'+(selDateKey===key?' active':'');
+    btn.textContent=`${DAY_NAMES[d.getDay()]} ${d.getDate()} (${cnt})`;
+    btn.onclick=()=>{selDateKey=key;renderBookings();};
     tabs.appendChild(btn);
   });
 
-  const filtered=selDay==="الكل"?active:active.filter(b=>b.day===selDay);
+  const filtered=selDateKey==='all'?active:active.filter(b=>b.dateKey===selDateKey);
   const sorted=[...filtered].sort((a,b)=>{
-    if(a.day!==b.day)return DAYS.indexOf(a.day)-DAYS.indexOf(b.day);
+    if(a.dateKey!==b.dateKey) return (a.dateKey||'').localeCompare(b.dateKey||'');
     return SLOT_ORDER.indexOf(a.slot)-SLOT_ORDER.indexOf(b.slot);
   });
 
@@ -337,7 +347,7 @@ function renderBookings(){
 
   const list=document.getElementById('cardsList');
   if(!sorted.length){
-    list.innerHTML=`<div class="empty"><div class="empty-icon">✂️</div><p>ما في حجوزات ${selDay!=="الكل"?"ليوم "+selDay:""}</p></div>`;
+    list.innerHTML=`<div class="empty"><div class="empty-icon">✂️</div><p>ما في حجوزات</p></div>`;
     return;
   }
   list.innerHTML=sorted.map(b=>{
@@ -345,13 +355,13 @@ function renderBookings(){
     return `<div class="card${late?' late':''}">
       <div class="card-top">
         <div style="flex:1;min-width:0">
-          <div class="day-badge">📅 ${b.day}</div>
+          <div class="date-badge">📅 ${b.dateLabel||b.day||''}</div>
           <div><span class="c-name">${b.name}</span>
           ${b.reminded?'<span class="tag tag-ok">✓ ذُكِّر</span>':''}
           ${late?`<span class="tag tag-late">⚠️ تأخر ${mins}د</span>`:''}</div>
           <div style="margin-top:5px">
             <span class="service-badge">${b.service||''}</span>
-            <span class="price-badge">💰 ${formatPrice(b.price||0)}</span>
+            <span class="price-badge">${formatPrice(b.price||0)}</span>
           </div>
         </div>
         <div class="time-badge" style="margin-right:8px">⏰ ${b.slot}</div>
@@ -375,15 +385,17 @@ function renderStats(){
   const active=data.bookings.filter(b=>!b.cancelled);
   const totalRevenue=active.reduce((s,b)=>s+(b.price||0),0);
   document.getElementById('totalRevenue').textContent=totalRevenue.toLocaleString('ar-IQ')+' د.ع';
-  const max=Math.max(...DAYS.map(d=>active.filter(b=>b.day===d).length),1);
-  document.getElementById('weeklyRows').innerHTML=DAYS.map(d=>{
-    const cnt=active.filter(b=>b.day===d).length;
-    const rev=active.filter(b=>b.day===d).reduce((s,b)=>s+(b.price||0),0);
+  const days=getNext7Days();
+  const max=Math.max(...days.map(d=>active.filter(b=>b.dateKey===makeDateKey(d)).length),1);
+  document.getElementById('weeklyRows').innerHTML=days.map(d=>{
+    const key=makeDateKey(d);
+    const cnt=active.filter(b=>b.dateKey===key).length;
+    const rev=active.filter(b=>b.dateKey===key).reduce((s,b)=>s+(b.price||0),0);
     const pct=Math.round((cnt/max)*100);
     return `<div class="week-row">
-      <span class="week-day">${d}</span>
+      <span class="week-day">${DAY_NAMES[d.getDay()]} ${d.getDate()}</span>
       <div class="week-bar-wrap"><div class="week-bar" style="width:${pct}%"></div></div>
-      <span class="week-count">${cnt} حجز${rev>0?' • '+rev.toLocaleString():''}  </span>
+      <span class="week-count">${cnt} ${rev>0?'• '+rev.toLocaleString():''}</span>
     </div>`;
   }).join('');
 }
@@ -391,28 +403,26 @@ function renderStats(){
 function renderWaitlist(){
   const list=document.getElementById('waitlistCards');
   if(!data.waitlist||!data.waitlist.length){
-    list.innerHTML=`<div class="empty"><div class="empty-icon">⏳</div><p>قائمة الانتظار فارغة</p></div>`;
-    return;
+    list.innerHTML=`<div class="empty"><div class="empty-icon">⏳</div><p>قائمة الانتظار فارغة</p></div>`;return;
   }
   list.innerHTML=data.waitlist.map(w=>`
     <div class="wait-card">
-      <div class="wait-info">
-        <div class="wait-name">${w.name}</div>
-        <div class="wait-detail">📞 ${w.phone} • 📅 ${w.day}</div>
-      </div>
+      <div><div class="wait-name">${w.name}</div><div class="wait-detail">📞 ${w.phone} • 📅 ${w.day}</div></div>
       <button class="notify-btn" onclick="notifyWait('${w.id}')">📲 أبلغه</button>
     </div>`).join('');
 }
 
 function renderSettings(){
-  const g=document.getElementById('disableGrid');g.innerHTML='';
-  DAYS.forEach(d=>{
-    const disabled=(data.disabledDays||[]).includes(d);
-    const btn=document.createElement('button');
-    btn.className='disable-btn'+(disabled?' disabled':'');
-    btn.textContent=disabled?`${d} 🚫`:d;
-    btn.onclick=()=>toggleDay(d);
-    g.appendChild(btn);
+  const g=document.getElementById('disableScroll');g.innerHTML='';
+  const days=getNext7Days();
+  days.forEach(d=>{
+    const key=makeDateKey(d);
+    const off=(data.disabledDays||[]).includes(key);
+    const card=document.createElement('div');
+    card.className='disable-card'+(off?' off':'');
+    card.innerHTML=`<span class="disable-dname">${DAY_NAMES[d.getDay()]}</span><span class="disable-dnum">${d.getDate()}</span><span class="disable-dmonth">${MONTH_NAMES[d.getMonth()]}</span>`;
+    card.onclick=()=>toggleDay(key);
+    g.appendChild(card);
   });
 }
 
@@ -423,7 +433,7 @@ function render(){
   else if(activeTab==='settings') renderSettings();
 }
 
-async function loadAndRender(){ await loadData(); render(); }
+async function loadAndRender(){ await loadData();render(); }
 
 (async()=>{
   await loadAndRender();
