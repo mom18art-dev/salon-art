@@ -20,7 +20,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .pin-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid #333;transition:all .15s;}
 .pin-dot.filled{background:#c9a84c;border-color:#c9a84c;}
 .pin-dot.error{background:#e05050;border-color:#e05050;}
-.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:260px;}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:260px;direction:ltr;}
 .pin-btn{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:18px;font-family:'Tajawal',sans-serif;font-size:22px;font-weight:700;color:#f0ece4;cursor:pointer;text-align:center;transition:all .12s;}
 .pin-btn:hover{border-color:#c9a84c44;color:#c9a84c;}
 .pin-btn:active{transform:scale(.94);background:#1a1a1a;}
@@ -211,18 +211,18 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     <div class="pin-dot" id="dot2"></div>
     <div class="pin-dot" id="dot3"></div>
   </div>
-  <div class="pin-pad">
-    <button class="pin-btn" onclick="pinPress('1')">1</button>
-    <button class="pin-btn" onclick="pinPress('2')">2</button>
-    <button class="pin-btn" onclick="pinPress('3')">3</button>
-    <button class="pin-btn" onclick="pinPress('4')">4</button>
-    <button class="pin-btn" onclick="pinPress('5')">5</button>
-    <button class="pin-btn" onclick="pinPress('6')">6</button>
-    <button class="pin-btn" onclick="pinPress('7')">7</button>
-    <button class="pin-btn" onclick="pinPress('8')">8</button>
-    <button class="pin-btn" onclick="pinPress('9')">9</button>
-    <button class="pin-btn zero" onclick="pinPress('0')">0</button>
-    <button class="pin-btn del" onclick="pinDel()">⌫</button>
+  <div class="pin-pad" id="pinPad">
+    <button class="pin-btn" data-pin="1">1</button>
+    <button class="pin-btn" data-pin="2">2</button>
+    <button class="pin-btn" data-pin="3">3</button>
+    <button class="pin-btn" data-pin="4">4</button>
+    <button class="pin-btn" data-pin="5">5</button>
+    <button class="pin-btn" data-pin="6">6</button>
+    <button class="pin-btn" data-pin="7">7</button>
+    <button class="pin-btn" data-pin="8">8</button>
+    <button class="pin-btn" data-pin="9">9</button>
+    <button class="pin-btn zero" data-pin="0">0</button>
+    <button class="pin-btn del" id="pinDelBtn">⌫</button>
   </div>
   <div class="pin-err-msg" id="pinErr">رمز خاطئ، حاول مرة ثانية</div>
 </div>
@@ -502,8 +502,28 @@ let selDateKey='all',activeTab='bookings',activeStatsTab='week';
 let lastSyncTime=null;
 
 // ============================================================
-// PIN LOGIC
+// PIN PAD EVENT LISTENERS
 // ============================================================
+document.addEventListener('DOMContentLoaded', function(){
+  // أزرار الأرقام
+  document.querySelectorAll('.pin-btn[data-pin]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      pinPress(this.getAttribute('data-pin'));
+    });
+    btn.addEventListener('touchend', function(e){
+      e.preventDefault();
+      pinPress(this.getAttribute('data-pin'));
+    });
+  });
+  // زر الحذف
+  var delBtn = document.getElementById('pinDelBtn');
+  if(delBtn){
+    delBtn.addEventListener('click', function(e){ e.preventDefault(); pinDel(); });
+    delBtn.addEventListener('touchend', function(e){ e.preventDefault(); pinDel(); });
+  }
+});
+
 let pinEntry='';
 const ADMIN_PIN_KEY='salon_admin_pin';
 
