@@ -184,6 +184,41 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .loading-screen p{margin-top:16px;color:#444;font-size:14px;}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;padding:12px 28px;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;z-index:9999;white-space:nowrap;display:none;box-shadow:0 4px 24px #c9a84c55;}
 </style>
+<script>
+// دوال PIN — تُعرّف هنا حتى تكون جاهزة عند الضغط
+var pinEntry='';
+var ADMIN_PIN_KEY='salon_admin_pin';
+function getPin(){ return localStorage.getItem(ADMIN_PIN_KEY)||'1234'; }
+function pinPress(d){
+  if(pinEntry.length>=4)return;
+  pinEntry+=d;
+  updatePinDots();
+  if(pinEntry.length===4) setTimeout(checkPin,120);
+}
+function pinDel(){ pinEntry=pinEntry.slice(0,-1); updatePinDots(); }
+function updatePinDots(){
+  for(var i=0;i<4;i++){
+    var dot=document.getElementById('dot'+i);
+    if(!dot)return;
+    if(i<pinEntry.length){ dot.classList.add('filled'); }else{ dot.classList.remove('filled'); }
+    dot.classList.remove('error');
+  }
+}
+function checkPin(){
+  if(pinEntry===getPin()){
+    document.getElementById('pinScreen').style.display='none';
+    document.getElementById('loadingScreen').style.display='flex';
+    initApp();
+  }else{
+    for(var i=0;i<4;i++) document.getElementById('dot'+i).classList.add('error');
+    document.getElementById('pinErr').classList.add('show');
+    setTimeout(function(){
+      pinEntry=''; updatePinDots();
+      document.getElementById('pinErr').classList.remove('show');
+    },1000);
+  }
+}
+</script>
 </head>
 <body>
 
@@ -212,17 +247,17 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     <div class="pin-dot" id="dot3"></div>
   </div>
   <div class="pin-pad" id="pinPad">
-    <button class="pin-btn" data-pin="1">1</button>
-    <button class="pin-btn" data-pin="2">2</button>
-    <button class="pin-btn" data-pin="3">3</button>
-    <button class="pin-btn" data-pin="4">4</button>
-    <button class="pin-btn" data-pin="5">5</button>
-    <button class="pin-btn" data-pin="6">6</button>
-    <button class="pin-btn" data-pin="7">7</button>
-    <button class="pin-btn" data-pin="8">8</button>
-    <button class="pin-btn" data-pin="9">9</button>
-    <button class="pin-btn zero" data-pin="0">0</button>
-    <button class="pin-btn del" id="pinDelBtn">⌫</button>
+    <button class="pin-btn" onclick="pinPress('1')">1</button>
+    <button class="pin-btn" onclick="pinPress('2')">2</button>
+    <button class="pin-btn" onclick="pinPress('3')">3</button>
+    <button class="pin-btn" onclick="pinPress('4')">4</button>
+    <button class="pin-btn" onclick="pinPress('5')">5</button>
+    <button class="pin-btn" onclick="pinPress('6')">6</button>
+    <button class="pin-btn" onclick="pinPress('7')">7</button>
+    <button class="pin-btn" onclick="pinPress('8')">8</button>
+    <button class="pin-btn" onclick="pinPress('9')">9</button>
+    <button class="pin-btn zero" onclick="pinPress('0')">0</button>
+    <button class="pin-btn del" onclick="pinDel()">⌫</button>
   </div>
   <div class="pin-err-msg" id="pinErr">رمز خاطئ، حاول مرة ثانية</div>
 </div>
@@ -501,28 +536,6 @@ let data={bookings:[],waitlist:[],disabledDays:[]};
 let selDateKey='all',activeTab='bookings',activeStatsTab='week';
 let lastSyncTime=null;
 
-// ============================================================
-// PIN PAD EVENT LISTENERS
-// ============================================================
-document.addEventListener('DOMContentLoaded', function(){
-  // أزرار الأرقام
-  document.querySelectorAll('.pin-btn[data-pin]').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      pinPress(this.getAttribute('data-pin'));
-    });
-    btn.addEventListener('touchend', function(e){
-      e.preventDefault();
-      pinPress(this.getAttribute('data-pin'));
-    });
-  });
-  // زر الحذف
-  var delBtn = document.getElementById('pinDelBtn');
-  if(delBtn){
-    delBtn.addEventListener('click', function(e){ e.preventDefault(); pinDel(); });
-    delBtn.addEventListener('touchend', function(e){ e.preventDefault(); pinDel(); });
-  }
-});
 
 let pinEntry='';
 const ADMIN_PIN_KEY='salon_admin_pin';
