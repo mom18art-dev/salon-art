@@ -25,8 +25,8 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 .inp{width:100%;background:#fff;border:1.5px solid #e8e0d5;border-radius:12px;padding:14px 16px;font-family:'Tajawal',sans-serif;font-size:15px;color:#111;outline:none;transition:border-color .2s;margin-bottom:10px;display:block;}
 .inp::placeholder{color:#ccc;}
 .inp:focus{border-color:#c9a84c;}
-
-/* Services */
+.inp.error{border-color:#e05555;}
+.inp-err{font-size:11px;color:#e05555;margin:-6px 0 8px 4px;display:none;}
 .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 .service-btn{background:#fff;border:1.5px solid #e8e0d5;border-radius:12px;padding:14px 12px;cursor:pointer;transition:all .18s;text-align:right;}
 .service-btn:hover{border-color:#c9a84c66;}
@@ -34,8 +34,6 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 .service-name{font-size:14px;font-weight:700;color:#333;display:block;}
 .service-btn.sel .service-name{color:#f5f0ea;}
 .service-price{font-size:12px;color:#c9a84c;font-weight:700;margin-top:3px;display:block;}
-
-/* 7-day calendar */
 .days-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;}
 .days-scroll::-webkit-scrollbar{display:none;}
 .day-card{flex-shrink:0;width:64px;background:#fff;border:1.5px solid #e8e0d5;border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;}
@@ -50,26 +48,21 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 .day-card.sel .day-month{color:#c9a84c66;}
 .day-card.today .day-num{color:#c9a84c;}
 .day-card.today{border-color:#c9a84c44;}
-
-/* Slots */
 .slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
 .slot-btn{background:#fff;border:1.5px solid #e8e0d5;border-radius:10px;padding:13px 4px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:600;color:#666;cursor:pointer;transition:all .18s;text-align:center;width:100%;}
-.slot-btn:hover:not(.bkd):not(.sel){border-color:#c9a84c;color:#c9a84c;}
+.slot-btn:hover:not(.bkd):not(.sel):not(.past){border-color:#c9a84c;color:#c9a84c;}
 .slot-btn.sel{background:#111;border-color:#111;color:#c9a84c;font-weight:900;}
 .slot-btn.bkd{opacity:.3;cursor:not-allowed;font-size:11px;}
 .slot-btn.bkd::after{content:"محجوز";display:block;font-size:9px;color:#e05555;}
-
+.slot-btn.past{opacity:.25;cursor:not-allowed;text-decoration:line-through;}
 .all-booked{background:#fff8f0;border:1.5px solid #f0c080;border-radius:12px;padding:18px;text-align:center;margin-top:4px;}
 .all-booked p{font-size:14px;color:#8a5000;font-weight:700;margin-bottom:6px;}
 .all-booked small{font-size:12px;color:#b07030;}
-
-/* Buttons */
 .book-btn{width:100%;padding:17px;background:linear-gradient(135deg,#b8942a,#c9a84c,#e2c060,#c9a84c);background-size:300%;color:#0d0d0d;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:900;border:none;border-radius:13px;cursor:pointer;transition:all .4s;box-shadow:0 4px 20px #c9a84c33;}
 .book-btn:hover:not(:disabled){background-position:right center;transform:translateY(-2px);}
 .book-btn:disabled{opacity:.3;cursor:not-allowed;background:#ccc;box-shadow:none;transform:none;}
+.book-btn.loading{opacity:.7;cursor:wait;}
 .wait-btn{width:100%;padding:15px;background:transparent;border:1.5px solid #c9a84c;color:#c9a84c;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;border-radius:13px;cursor:pointer;}
-
-/* Success */
 .success{background:#fff;border:1px solid #e8e0d5;border-radius:18px;padding:30px 22px;text-align:center;animation:pop .35s ease;}
 @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
 .success-logo{margin:0 auto 16px;display:block;}
@@ -84,10 +77,8 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 .price-row span{font-size:13px;color:#4a8a4a;font-weight:700;}
 .price-row strong{font-size:18px;color:#2a6a2a;font-weight:900;}
 .warn-box{background:#fffbf0;border:1.5px solid #f0d060;border-radius:11px;padding:14px 16px;font-size:13px;color:#7a5c00;line-height:1.9;margin-bottom:18px;}
-
 .wait-success{background:#fff;border:1.5px solid #c9a84c44;border-radius:18px;padding:28px 22px;text-align:center;animation:pop .35s ease;}
 .wait-success h2{font-size:20px;font-weight:900;color:#111;margin:12px 0 6px;}
-
 .loading-screen{position:fixed;inset:0;background:#f7f3ee;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;}
 .loading-screen svg{animation:spin 1.5s linear infinite;}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
@@ -127,12 +118,13 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
     <div class="header-desc">من 5 مساءً حتى 11 ليلاً</div>
   </div>
 
-  <!-- FORM -->
   <div id="formView">
     <div class="section" style="margin-top:26px">
       <div class="lbl">بياناتك</div>
       <input class="inp" id="nameInp" placeholder="اسمك الكريم..." maxlength="30"/>
+      <div class="inp-err" id="nameErr">⚠️ الاسم يجب أن يكون 3 أحرف على الأقل</div>
       <input class="inp" id="phoneInp" placeholder="رقم واتساب (مثال: 07701234567)" maxlength="13" type="tel"/>
+      <div class="inp-err" id="phoneErr">⚠️ أدخل رقم عراقي صحيح (07X-XXXXXXXX)</div>
     </div>
 
     <div class="divider"></div>
@@ -166,6 +158,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
     <div class="section" style="margin-top:10px;display:none" id="waitBtnSection">
       <button class="wait-btn" onclick="handleWaitlist()">+ انضم لقائمة الانتظار</button>
     </div>
+    <div style="height:30px"></div>
   </div>
 
   <!-- SUCCESS -->
@@ -195,7 +188,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
           <strong id="s-price"></strong>
         </div>
         <div class="warn-box">
-          🔔 راح يوصلك تذكير على واتساب قبل ساعة من موعدك.<br/>
+          🔔 سيتواصل معك صاحب الصالون للتأكيد على واتساب.<br/>
           ⚠️ التأخر أكثر من <strong>15 دقيقة</strong> يلغي حجزك.
         </div>
       </div>
@@ -217,15 +210,25 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 <div class="toast" id="toast"></div>
 
 <script>
-const BIN_ID  = '69f53bd4aaba8821975f4502';
-const API_KEY = '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum';
-const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-const HEADERS = {'Content-Type':'application/json','X-Master-Key':API_KEY};
+// ============================================================
+// CONFIG — ضع هنا بياناتك فقط
+// ============================================================
+const CONFIG = {
+  BIN_ID:  '69f53bd4aaba8821975f4502',
+  API_KEY: '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum',
+  TG_BOT_TOKEN: '8205449854:AAEy8543td3uSxq7L96y09B73UKn0wwdBZE',
+  TG_CHAT_ID:   '93372553',
+};
+// ============================================================
 
-const SLOTS = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
-const DAY_NAMES = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
-const MONTH_NAMES = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-const SERVICES = [
+const API_URL = `https://api.jsonbin.io/v3/b/${CONFIG.BIN_ID}`;
+const HDRS    = {'Content-Type':'application/json','X-Master-Key':CONFIG.API_KEY};
+
+const SLOTS      = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
+const SLOT_HOURS = {"5:00 م":17,"6:00 م":18,"7:00 م":19,"8:00 م":20,"9:00 م":21,"10:00 م":22,"11:00 م":23};
+const DAY_NAMES  = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const MONTH_NAMES= ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const SERVICES   = [
   {id:'full',  name:'حلاقة كاملة', price:15000},
   {id:'beard', name:'تحديد ولحية', price:10000},
   {id:'wash',  name:'شسوار',        price:5000},
@@ -233,61 +236,118 @@ const SERVICES = [
 ];
 
 let data={bookings:[],waitlist:[],disabledDays:[]};
-let selService=null, selDateKey=null, selDateLabel=null, selSlot=null;
+let selService=null,selDateKey=null,selDateLabel=null,selSlot=null;
+let isSaving=false;
 
-// dateKey = "2025-05-03" format
 function makeDateKey(d){ return d.toISOString().split('T')[0]; }
 function makeLabel(d){ return `${DAY_NAMES[d.getDay()]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`; }
+function formatPrice(p){ return Number(p).toLocaleString('ar-IQ')+' د.ع'; }
 
-// Generate next 7 days
 function getNext7Days(){
-  const days=[];
-  const today=new Date();
-  today.setHours(0,0,0,0);
-  for(let i=0;i<7;i++){
-    const d=new Date(today);
-    d.setDate(today.getDate()+i);
-    days.push(d);
-  }
+  const days=[];const today=new Date();today.setHours(0,0,0,0);
+  for(let i=0;i<7;i++){const d=new Date(today);d.setDate(today.getDate()+i);days.push(d);}
   return days;
+}
+
+// ✅ FIX: التحقق من رقم عراقي صحيح
+function isValidIraqiPhone(phone){
+  const clean=phone.replace(/\D/g,'');
+  return /^07[3-9]\d{8}$/.test(clean)||/^9647[3-9]\d{8}$/.test(clean);
+}
+
+// ✅ FIX: التحقق من الاسم
+function isValidName(name){
+  return name.trim().length>=3 && /[\u0600-\u06FFa-zA-Z]/.test(name);
 }
 
 async function loadData(){
   try{
-    const r=await fetch(API_URL,{headers:{'X-Master-Key':API_KEY}});
+    const r=await fetch(API_URL,{headers:{'X-Master-Key':CONFIG.API_KEY}});
+    if(!r.ok) throw new Error('fetch error');
     const d=await r.json();
-    data=d.record;
-    if(!data.bookings) data.bookings=[];
-    if(!data.waitlist) data.waitlist=[];
+    data=d.record||{};
+    if(!data.bookings)   data.bookings=[];
+    if(!data.waitlist)   data.waitlist=[];
     if(!data.disabledDays) data.disabledDays=[];
-  }catch{}
+  }catch(e){
+    showToast('❌ خطأ في الاتصال، تحقق من الإنترنت');
+  }
 }
 
 async function saveData(){
-  await fetch(API_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(data)});
+  try{
+    const r=await fetch(API_URL,{method:'PUT',headers:HDRS,body:JSON.stringify(data)});
+    if(!r.ok) throw new Error('save error');
+  }catch(e){
+    showToast('❌ فشل حفظ البيانات، حاول مرة ثانية');
+    throw e;
+  }
 }
 
-function isBooked(dateKey,slot){ return data.bookings.some(b=>b.dateKey===dateKey&&b.slot===slot&&!b.cancelled); }
-function phoneBooked(p){ return data.bookings.some(b=>b.phone===p&&!b.cancelled); }
-function allSlotsBooked(dateKey){ return SLOTS.every(s=>isBooked(dateKey,s)); }
-function formatPrice(p){ return Number(p).toLocaleString('ar-IQ')+' د.ع'; }
+// ✅ إشعار تيليجرام
+async function sendTelegram(msg){
+  if(!CONFIG.TG_BOT_TOKEN||!CONFIG.TG_CHAT_ID) return;
+  try{
+    await fetch(`https://api.telegram.org/bot${CONFIG.TG_BOT_TOKEN}/sendMessage`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:CONFIG.TG_CHAT_ID,text:msg,parse_mode:'HTML'})
+    });
+  }catch(e){ console.log('Telegram error',e); }
+}
+
+// ✅ FIX: إخفاء المواعيد المنتهية (أقل من 30 دقيقة)
+function isSlotPast(dateKey,slot){
+  const todayStr=makeDateKey(new Date());
+  if(dateKey!==todayStr) return false;
+  const h=SLOT_HOURS[slot];if(!h)return false;
+  const now=new Date();
+  const slotTime=new Date();slotTime.setHours(h,0,0,0);
+  return (slotTime-now)<30*60*1000;
+}
+
+function isBooked(dateKey,slot){return data.bookings.some(b=>b.dateKey===dateKey&&b.slot===slot&&!b.cancelled);}
+function phoneBooked(p){return data.bookings.some(b=>b.phone===p&&!b.cancelled);}
+function allSlotsBooked(dateKey){return SLOTS.every(s=>isBooked(dateKey,s)||isSlotPast(dateKey,s));}
 
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.style.display='block';
-  setTimeout(()=>t.style.display='none',3000);
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.style.display='none',3500);
+}
+
+function validateInputs(){
+  const name=document.getElementById('nameInp').value.trim();
+  const phone=document.getElementById('phoneInp').value.trim();
+  let ok=true;
+
+  const nameEl=document.getElementById('nameInp');
+  const nameErr=document.getElementById('nameErr');
+  if(name&&!isValidName(name)){
+    nameEl.classList.add('error');nameErr.style.display='block';ok=false;
+  }else{nameEl.classList.remove('error');nameErr.style.display='none';}
+
+  const phoneEl=document.getElementById('phoneInp');
+  const phoneErr=document.getElementById('phoneErr');
+  if(phone&&!isValidIraqiPhone(phone)){
+    phoneEl.classList.add('error');phoneErr.style.display='block';ok=false;
+  }else{phoneEl.classList.remove('error');phoneErr.style.display='none';}
+
+  return ok;
 }
 
 function updateBtn(){
+  if(!validateInputs()) return;
   const name=document.getElementById('nameInp').value.trim();
   const phone=document.getElementById('phoneInp').value.trim();
   const btn=document.getElementById('bookBtn');
-  if(name&&phone&&selService&&selDateKey&&selSlot){
-    btn.disabled=false;
+  const valid=name&&phone&&isValidName(name)&&isValidIraqiPhone(phone)&&selService&&selDateKey&&selSlot;
+  btn.disabled=!valid;
+  if(valid){
     const svc=SERVICES.find(s=>s.id===selService);
     btn.textContent=`✦ احجز ${selSlot} — ${formatPrice(svc.price)}`;
   }else{
-    btn.disabled=true;
     btn.textContent='اختار الخدمة واليوم والساعة';
   }
 }
@@ -309,16 +369,14 @@ function renderDays(){
   const todayKey=makeDateKey(new Date());
   days.forEach(d=>{
     const key=makeDateKey(d);
-    const dayName=DAY_NAMES[d.getDay()];
-    const disabled=(data.disabledDays||[]).includes(key)||(data.disabledDays||[]).includes(dayName);
+    // ✅ FIX: توحيد disabledDays على dateKey فقط
+    const disabled=(data.disabledDays||[]).includes(key);
     const isToday=key===todayKey;
     const card=document.createElement('div');
     card.className='day-card'+(selDateKey===key?' sel':'')+(disabled?' disabled':'')+(isToday?' today':'');
-    card.innerHTML=`<span class="day-name">${dayName}</span><span class="day-num">${d.getDate()}</span><span class="day-month">${MONTH_NAMES[d.getMonth()]}</span>`;
+    card.innerHTML=`<span class="day-name">${DAY_NAMES[d.getDay()]}</span><span class="day-num">${d.getDate()}</span><span class="day-month">${MONTH_NAMES[d.getMonth()]}</span>`;
     if(!disabled) card.onclick=()=>{
-      selDateKey=key;
-      selDateLabel=makeLabel(d);
-      selSlot=null;
+      selDateKey=key;selDateLabel=makeLabel(d);selSlot=null;
       renderDays();renderSlots();updateBtn();
     };
     g.appendChild(card);
@@ -342,10 +400,11 @@ function renderSlots(){
   bookSec.style.display=full?'none':'block';
   SLOTS.forEach(s=>{
     const bkd=isBooked(selDateKey,s);
+    const past=isSlotPast(selDateKey,s);
     const btn=document.createElement('button');
-    btn.className='slot-btn'+(bkd?' bkd':'')+(selSlot===s?' sel':'');
+    btn.className='slot-btn'+(bkd?' bkd':'')+(past&&!bkd?' past':'')+(selSlot===s?' sel':'');
     btn.textContent=s;
-    if(!bkd) btn.onclick=()=>{selSlot=s;renderSlots();updateBtn();};
+    if(!bkd&&!past) btn.onclick=()=>{selSlot=s;renderSlots();updateBtn();};
     g.appendChild(btn);
   });
 }
@@ -357,32 +416,52 @@ function openWA(phone,msg){
 }
 
 async function handleBook(){
+  if(isSaving)return;
   const name=document.getElementById('nameInp').value.trim();
   const phone=document.getElementById('phoneInp').value.trim();
-  if(!name||!phone||!selService||!selDateKey||!selSlot)return;
-  if(phone.replace(/\D/g,'').length<9){showToast('⚠️ رقم الهاتف غير صحيح');return;}
+  if(!isValidName(name)){showToast('⚠️ الاسم يجب أن يكون 3 أحرف على الأقل');return;}
+  if(!isValidIraqiPhone(phone)){showToast('⚠️ رقم الهاتف غير صحيح');return;}
+  if(!selService||!selDateKey||!selSlot)return;
   if(phoneBooked(phone)){showToast('⚠️ هذا الرقم عنده حجز مسبق!');return;}
-  if(isBooked(selDateKey,selSlot)){showToast('⚠️ هذا الوقت انحجز للتو!');await loadData();renderSlots();return;}
 
   const btn=document.getElementById('bookBtn');
-  btn.disabled=true;btn.textContent='جاري الحجز...';
+  btn.disabled=true;btn.textContent='⏳ جاري الحجز...';btn.classList.add('loading');
+  isSaving=true;
+
+  // ✅ FIX: Re-fetch قبل الحفظ للحماية من race condition
+  await loadData();
+  if(isBooked(selDateKey,selSlot)){
+    showToast('⚠️ هذا الوقت انحجز للتو! اختار وقتاً آخر');
+    renderSlots();btn.disabled=false;btn.classList.remove('loading');
+    btn.textContent='✦ احجز';isSaving=false;return;
+  }
 
   const svc=SERVICES.find(s=>s.id===selService);
   const booking={
     id:'b'+Date.now(),name,phone,
     service:svc.name,serviceId:svc.id,price:svc.price,
     dateKey:selDateKey,dateLabel:selDateLabel,slot:selSlot,
-    // للتوافق مع الادمن
     day:selDateLabel,
     createdAt:Date.now(),
     bookedAt:new Date().toLocaleTimeString('ar-IQ'),
-    reminded:false,cancelled:false
+    reminded:false,cancelled:false,cancelledAt:null
   };
   data.bookings.push(booking);
-  await saveData();
 
-  const msg=`السلام عليكم ${name} 👋\n\n✅ *تم تثبيت حجزك في Salon Art*\n\n✂️ الخدمة: *${svc.name}*\n📅 التاريخ: *${selDateLabel}*\n⏰ الساعة: *${selSlot}*\n💰 السعر: *${formatPrice(svc.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.\n\nنشوفك قريب! 🌟`;
-  openWA(phone,msg);
+  try{
+    await saveData();
+  }catch(e){
+    data.bookings.pop();
+    btn.disabled=false;btn.classList.remove('loading');
+    btn.textContent=`✦ احجز ${selSlot} — ${formatPrice(svc.price)}`;
+    isSaving=false;return;
+  }
+
+  // إشعار تيليجرام فوري لصاحب الصالون
+  sendTelegram(
+    `🎉 <b>حجز جديد!</b>\n\n👤 الاسم: <b>${name}</b>\n✂️ الخدمة: <b>${svc.name}</b>\n📅 التاريخ: <b>${selDateLabel}</b>\n⏰ الساعة: <b>${selSlot}</b>\n💰 السعر: <b>${formatPrice(svc.price)}</b>\n📞 الهاتف: <b>${phone}</b>\n\n🔗 افتح لوحة التحكم للمتابعة`
+  );
+  // ✅ لا يُفتح واتساب هنا — الإرسال يتم من لوحة التحكم
 
   document.getElementById('s-name').textContent=name;
   document.getElementById('s-service').textContent=svc.name;
@@ -392,20 +471,25 @@ async function handleBook(){
   document.getElementById('s-price').textContent=formatPrice(svc.price);
   document.getElementById('formView').classList.add('hidden');
   document.getElementById('successView').classList.remove('hidden');
+  isSaving=false;
 }
 
 async function handleWaitlist(){
   const name=document.getElementById('nameInp').value.trim();
   const phone=document.getElementById('phoneInp').value.trim();
-  if(!name||!phone){showToast('⚠️ أدخل اسمك ورقمك أولاً');return;}
+  if(!isValidName(name)){showToast('⚠️ أدخل اسمك (3 أحرف على الأقل)');return;}
+  if(!isValidIraqiPhone(phone)){showToast('⚠️ رقم الهاتف غير صحيح');return;}
   if(!selDateKey){showToast('⚠️ اختار اليوم أولاً');return;}
   const entry={id:'w'+Date.now(),name,phone,day:selDateLabel,dateKey:selDateKey,createdAt:Date.now()};
   if(!data.waitlist) data.waitlist=[];
   data.waitlist.push(entry);
-  await saveData();
-  document.getElementById('w-day').textContent=selDateLabel;
-  document.getElementById('formView').classList.add('hidden');
-  document.getElementById('waitlistView').classList.remove('hidden');
+  try{
+    await saveData();
+    sendTelegram(`⏳ <b>انتظار جديد</b>\n\n👤 ${name}\n📅 ${selDateLabel}\n📞 ${phone}`);
+    document.getElementById('w-day').textContent=selDateLabel;
+    document.getElementById('formView').classList.add('hidden');
+    document.getElementById('waitlistView').classList.remove('hidden');
+  }catch(e){data.waitlist.pop();}
 }
 
 (async()=>{

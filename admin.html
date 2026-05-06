@@ -8,7 +8,28 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0ece4;min-height:100vh;}
-.app{padding-bottom:80px;}
+.app{padding-bottom:90px;}
+
+/* ===== PIN SCREEN ===== */
+.pin-screen{position:fixed;inset:0;background:#080808;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:20px;}
+.pin-logo{margin-bottom:24px;}
+.pin-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#f0ece4;letter-spacing:3px;margin-bottom:6px;text-align:center;}
+.pin-title span{color:#c9a84c;}
+.pin-sub{font-size:12px;color:#444;margin-bottom:32px;text-align:center;}
+.pin-dots{display:flex;gap:14px;margin-bottom:32px;}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid #333;transition:all .15s;}
+.pin-dot.filled{background:#c9a84c;border-color:#c9a84c;}
+.pin-dot.error{background:#e05050;border-color:#e05050;}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:260px;}
+.pin-btn{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:18px;font-family:'Tajawal',sans-serif;font-size:22px;font-weight:700;color:#f0ece4;cursor:pointer;text-align:center;transition:all .12s;}
+.pin-btn:hover{border-color:#c9a84c44;color:#c9a84c;}
+.pin-btn:active{transform:scale(.94);background:#1a1a1a;}
+.pin-btn.del{font-size:16px;color:#555;}
+.pin-btn.zero{grid-column:2;}
+.pin-err-msg{font-size:12px;color:#e05050;margin-top:16px;opacity:0;transition:opacity .2s;}
+.pin-err-msg.show{opacity:1;}
+
+/* ===== HEADER ===== */
 .header{background:linear-gradient(160deg,#0d0d0d,#111008);border-bottom:1px solid #1a1a1a;padding:18px 18px 14px;display:flex;align-items:center;justify-content:space-between;max-width:540px;margin:0 auto;}
 .logo-row{display:flex;align-items:center;gap:10px;}
 .logo-sm{width:38px;height:38px;}
@@ -16,11 +37,19 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .brand-sm span{color:#c9a84c;}
 .header-sub{font-size:11px;color:#333;margin-top:1px;}
 .total-badge{background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;font-weight:900;font-size:13px;padding:6px 16px;border-radius:50px;}
-.main-tabs{display:flex;max-width:540px;margin:0 auto;border-bottom:1px solid #1a1a1a;}
-.main-tab{flex:1;padding:12px;text-align:center;font-size:13px;font-weight:700;color:#333;cursor:pointer;border-bottom:2px solid transparent;}
+.sync-bar{max-width:540px;margin:0 auto;padding:6px 18px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#333;}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:#2a6a2a;display:inline-block;margin-left:5px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ===== TABS ===== */
+.main-tabs{display:flex;max-width:540px;margin:0 auto;border-bottom:1px solid #1a1a1a;overflow-x:auto;}
+.main-tabs::-webkit-scrollbar{display:none;}
+.main-tab{flex:1;min-width:60px;padding:11px 8px;text-align:center;font-size:12px;font-weight:700;color:#333;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;}
 .main-tab.active{color:#c9a84c;border-bottom-color:#c9a84c;}
 .tab-content{display:none;}
 .tab-content.active{display:block;}
+
+/* ===== STATS STRIP ===== */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 18px 0;max-width:540px;margin:0 auto;}
 .stat{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:14px 8px;text-align:center;}
 .stat-n{font-size:22px;font-weight:900;color:#c9a84c;}
@@ -31,13 +60,14 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .refresh-btn{background:#111;border:1px solid #1a1a1a;border-radius:6px;color:#444;font-family:'Tajawal',sans-serif;font-size:11px;padding:5px 12px;cursor:pointer;}
 .refresh-btn:hover{border-color:#c9a84c55;color:#c9a84c;}
 
-/* Date tabs */
+/* ===== DATE TABS ===== */
 .date-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
 .date-tabs::-webkit-scrollbar{display:none;}
 .date-tab{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:7px 13px;color:#333;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;}
 .date-tab:hover{color:#888;}
 .date-tab.active{background:#c9a84c;border-color:#c9a84c;color:#0d0d0d;font-weight:900;}
 
+/* ===== BOOKING CARD ===== */
 .card{background:#111;border:1px solid #1a1a1a;border-radius:14px;padding:16px;margin-bottom:10px;}
 .card.late{border-color:#c0404033;background:#110808;}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
@@ -57,7 +87,17 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .cancel-btn{background:#1a0808;border:1px solid #3a1010;border-radius:9px;padding:11px 14px;color:#e05050;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
 .late-action{width:100%;margin-top:8px;background:#c04040;border:none;border-radius:9px;padding:11px;color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
 
-/* Weekly stats */
+/* ===== CALENDAR VIEW ===== */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px;}
+.cal-day-head{text-align:center;font-size:10px;color:#333;padding:4px 0;}
+.cal-slot-wrap{background:#111;border:1px solid #1a1a1a;border-radius:10px;padding:6px 4px;min-height:48px;}
+.cal-date{font-size:10px;color:#444;text-align:center;margin-bottom:4px;}
+.cal-slot{font-size:9px;border-radius:4px;padding:2px 4px;margin-bottom:2px;text-align:center;}
+.cs-free{background:#0a1a0a;color:#2a6a2a;}
+.cs-bkd{background:#1a1a0a;color:#c9a84c;}
+.cs-late{background:#2a0808;color:#e05050;}
+
+/* ===== STATS PAGE ===== */
 .weekly{padding:14px 18px 0;max-width:540px;margin:0 auto;}
 .week-card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:16px;margin-bottom:10px;}
 .week-title{font-size:12px;color:#555;margin-bottom:12px;letter-spacing:2px;}
@@ -70,14 +110,21 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .revenue-box{background:#111;border:1px solid #c9a84c22;border-radius:12px;padding:16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
 .revenue-box span{font-size:13px;color:#666;}
 .revenue-box strong{font-size:20px;font-weight:900;color:#c9a84c;}
+.stats-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.stats-tab{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;color:#333;cursor:pointer;}
+.stats-tab.active{background:#c9a84c22;border-color:#c9a84c44;color:#c9a84c;}
+.top-service{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1a1a1a;}
+.top-service:last-child{border:none;}
+.top-service-name{font-size:13px;color:#888;}
+.top-service-count{font-size:13px;font-weight:700;color:#c9a84c;}
 
-/* Waitlist */
+/* ===== WAITLIST ===== */
 .wait-card{background:#111;border:1px solid #c9a84c22;border-radius:12px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
 .wait-name{font-size:15px;font-weight:700;color:#f0ece4;}
 .wait-detail{font-size:12px;color:#444;margin-top:3px;}
 .notify-btn{background:linear-gradient(135deg,#128c3a,#1aad48);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
 
-/* Disable days */
+/* ===== SETTINGS ===== */
 .disable-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
 .disable-scroll::-webkit-scrollbar{display:none;}
 .disable-card{flex-shrink:0;width:64px;background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;}
@@ -89,20 +136,98 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .disable-dmonth{font-size:9px;color:#333;display:block;margin-top:2px;}
 .disable-card.off .disable-dmonth{color:#e0505088;}
 .disable-info{font-size:12px;color:#333;margin-bottom:14px;line-height:1.7;}
+.setting-card{background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:16px;margin-bottom:12px;}
+.setting-title{font-size:13px;font-weight:700;color:#c9a84c;margin-bottom:12px;}
+.setting-row{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.setting-lbl{font-size:11px;color:#444;}
+.setting-inp{background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:10px 12px;font-family:'Tajawal',sans-serif;font-size:13px;color:#f0ece4;width:100%;outline:none;}
+.setting-inp:focus{border-color:#c9a84c55;}
+.save-btn{background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;border:none;border-radius:9px;padding:11px 20px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;width:100%;}
+.tg-status{font-size:11px;padding:6px 12px;border-radius:8px;margin-top:8px;text-align:center;}
+.tg-ok{background:#0a1a0a;color:#4a9a4a;border:1px solid #1a3a1a;}
+.tg-fail{background:#1a0808;color:#e05050;border:1px solid #3a1010;}
+.logout-btn{background:#1a0808;border:1px solid #3a1010;border-radius:9px;padding:8px 14px;color:#e05050;font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.logout-btn:hover{background:#2a0808;border-color:#e05050;}
+.toggle-switch{position:relative;width:44px;height:24px;cursor:pointer;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-track{position:absolute;inset:0;background:#1a1a1a;border-radius:12px;border:1px solid #222;transition:.3s;}
+.toggle-switch input:checked+.toggle-track{background:#c9a84c22;border-color:#c9a84c55;}
+.toggle-thumb{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#333;transition:.3s;z-index:1;}
+.toggle-switch input:checked~.toggle-thumb{right:calc(100% - 19px);background:#c9a84c;}
+.setting-desc{font-size:12px;color:#444;margin-bottom:14px;line-height:1.7;}
+.connect-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700;}
+.connect-status--off{background:#111;border:1px solid #222;color:#444;}
+.connect-status--on{background:#0a1a0a;border:1px solid #1a3a1a;color:#4a9a4a;}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot-off{background:#333;}
+.dot-on{background:#4a9a4a;box-shadow:0 0 6px #4a9a4a88;animation:pulse 2s infinite;}
+.info-box{background:#0d0d0d;border:1px solid #1a1a1a;border-radius:10px;padding:12px 14px;}
+.info-box-title{font-size:11px;font-weight:700;color:#555;letter-spacing:1px;margin-bottom:8px;}
+.info-step{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#333;line-height:1.6;margin-bottom:4px;}
+.info-step:last-child{margin-bottom:0;}
+.info-num{background:#1a1a1a;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#555;flex-shrink:0;margin-top:2px;}
+.wa-feature-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #1a1a1a;}
+.wa-feature-row:last-of-type{border-bottom:none;}
+.wa-feature-info{flex:1;}
+.wa-feature-name{font-size:13px;font-weight:700;color:#c9a84c;}
+.wa-feature-sub{font-size:11px;color:#444;margin-top:2px;line-height:1.5;}
+.msg-preview{background:#0a0a0a;border:1px solid #1a1a1a;border-radius:10px;padding:12px 14px;font-size:11px;color:#555;line-height:1.9;direction:rtl;}
 
+/* ===== MISC ===== */
 .empty{text-align:center;padding:44px 0;border:1px dashed #1a1a1a;border-radius:14px;}
 .empty-icon{font-size:36px;margin-bottom:10px;opacity:.3;}
 .empty p{color:#222;font-size:14px;}
-.loading-screen{position:fixed;inset:0;background:#080808;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;}
+.loading-screen{position:fixed;inset:0;background:#080808;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:998;}
 .loading-screen svg{animation:spin 1.5s linear infinite;}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .loading-screen p{margin-top:16px;color:#444;font-size:14px;}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;padding:12px 28px;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;z-index:999;white-space:nowrap;display:none;box-shadow:0 4px 24px #c9a84c55;}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0d0d0d;padding:12px 28px;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;z-index:9999;white-space:nowrap;display:none;box-shadow:0 4px 24px #c9a84c55;}
 </style>
 </head>
 <body>
 
-<div class="loading-screen" id="loadingScreen">
+<!-- ===== PIN SCREEN ===== -->
+<div id="pinScreen" class="pin-screen">
+  <div class="pin-logo">
+    <svg width="54" height="54" viewBox="0 0 54 54" fill="none">
+      <line x1="27" y1="27" x2="6" y2="10" stroke="#c9a84c" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="27" y1="27" x2="6" y2="44" stroke="#c9a84c" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="27" y1="27" x2="48" y2="10" stroke="#e8c96a" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="27" y1="27" x2="48" y2="44" stroke="#e8c96a" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="6" cy="10" r="4.5" stroke="#c9a84c" stroke-width="1.8" fill="#080808"/>
+      <circle cx="6" cy="44" r="4.5" stroke="#c9a84c" stroke-width="1.8" fill="#080808"/>
+      <circle cx="48" cy="10" r="4.5" stroke="#e8c96a" stroke-width="1.8" fill="#080808"/>
+      <circle cx="48" cy="44" r="4.5" stroke="#e8c96a" stroke-width="1.8" fill="#080808"/>
+      <circle cx="27" cy="27" r="4" fill="#c9a84c"/>
+      <circle cx="27" cy="27" r="1.8" fill="#080808"/>
+    </svg>
+  </div>
+  <div class="pin-title">SALON <span>ART</span></div>
+  <div class="pin-sub">أدخل رمز الدخول</div>
+  <div class="pin-dots" id="pinDots">
+    <div class="pin-dot" id="dot0"></div>
+    <div class="pin-dot" id="dot1"></div>
+    <div class="pin-dot" id="dot2"></div>
+    <div class="pin-dot" id="dot3"></div>
+  </div>
+  <div class="pin-pad">
+    <button class="pin-btn" onclick="pinPress('1')">1</button>
+    <button class="pin-btn" onclick="pinPress('2')">2</button>
+    <button class="pin-btn" onclick="pinPress('3')">3</button>
+    <button class="pin-btn" onclick="pinPress('4')">4</button>
+    <button class="pin-btn" onclick="pinPress('5')">5</button>
+    <button class="pin-btn" onclick="pinPress('6')">6</button>
+    <button class="pin-btn" onclick="pinPress('7')">7</button>
+    <button class="pin-btn" onclick="pinPress('8')">8</button>
+    <button class="pin-btn" onclick="pinPress('9')">9</button>
+    <button class="pin-btn zero" onclick="pinPress('0')">0</button>
+    <button class="pin-btn del" onclick="pinDel()">⌫</button>
+  </div>
+  <div class="pin-err-msg" id="pinErr">رمز خاطئ، حاول مرة ثانية</div>
+</div>
+
+<!-- ===== LOADING ===== -->
+<div class="loading-screen" id="loadingScreen" style="display:none">
   <svg width="44" height="44" viewBox="0 0 54 54" fill="none">
     <circle cx="27" cy="27" r="24" stroke="#222" stroke-width="3"/>
     <path d="M27 3 A24 24 0 0 1 51 27" stroke="#c9a84c" stroke-width="3" stroke-linecap="round"/>
@@ -110,6 +235,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
   <p>جاري تحميل الحجوزات...</p>
 </div>
 
+<!-- ===== MAIN APP ===== -->
 <div class="app" id="mainApp" style="display:none">
   <div class="header">
     <div class="logo-row">
@@ -131,16 +257,23 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
       </div>
     </div>
     <div class="total-badge" id="totalBadge">0 حجز</div>
+    <button class="logout-btn" onclick="logout()" title="تسجيل الخروج">🔒 خروج</button>
+  </div>
+
+  <div class="sync-bar">
+    <span><span class="sync-dot"></span> <span id="lastSync">--</span></span>
+    <span id="syncStatus" style="color:#2a6a2a;font-size:11px">متزامن</span>
   </div>
 
   <div class="main-tabs">
     <div class="main-tab active" onclick="switchTab('bookings')">📋 الحجوزات</div>
-    <div class="main-tab" onclick="switchTab('stats')">📊 الإحصائيات</div>
-    <div class="main-tab" onclick="switchTab('waitlist')">⏳ الانتظار</div>
-    <div class="main-tab" onclick="switchTab('settings')">⚙️ الإعدادات</div>
+    <div class="main-tab" onclick="switchTab('calendar')">🗓️ تقويم</div>
+    <div class="main-tab" onclick="switchTab('stats')">📊 إحصائيات</div>
+    <div class="main-tab" onclick="switchTab('waitlist')">⏳ انتظار</div>
+    <div class="main-tab" onclick="switchTab('settings')">⚙️ إعدادات</div>
   </div>
 
-  <!-- BOOKINGS -->
+  <!-- BOOKINGS TAB -->
   <div class="tab-content active" id="tab-bookings">
     <div class="stats">
       <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l">إجمالي</div></div>
@@ -157,21 +290,62 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     </div>
   </div>
 
-  <!-- STATS -->
+  <!-- CALENDAR TAB -->
+  <div class="tab-content" id="tab-calendar">
+    <div class="section" style="margin-top:16px">
+      <div class="sec-row">
+        <div class="sec-title">التقويم الأسبوعي</div>
+      </div>
+      <div id="calendarView"></div>
+    </div>
+  </div>
+
+  <!-- STATS TAB -->
   <div class="tab-content" id="tab-stats">
     <div class="weekly">
-      <div class="week-card">
-        <div class="week-title">الإحصائيات (7 أيام قادمة)</div>
-        <div id="weeklyRows"></div>
+      <div class="stats-tabs">
+        <button class="stats-tab active" onclick="switchStats('week')" id="stab-week">أسبوعي</button>
+        <button class="stats-tab" onclick="switchStats('month')" id="stab-month">شهري</button>
+        <button class="stats-tab" onclick="switchStats('services')" id="stab-services">الخدمات</button>
       </div>
-      <div class="revenue-box">
-        <span>إجمالي الإيرادات المتوقعة</span>
-        <strong id="totalRevenue">0 د.ع</strong>
+      <div id="stats-week">
+        <div class="week-card">
+          <div class="week-title">الحجوزات (7 أيام قادمة)</div>
+          <div id="weeklyRows"></div>
+        </div>
+        <div class="revenue-box">
+          <span>إيرادات الأسبوع</span>
+          <strong id="totalRevenue">0 د.ع</strong>
+        </div>
+      </div>
+      <div id="stats-month" style="display:none">
+        <div class="week-card">
+          <div class="week-title">إجمالي هذا الشهر</div>
+          <div id="monthlyRows"></div>
+        </div>
+        <div class="revenue-box">
+          <span>إيرادات الشهر</span>
+          <strong id="monthRevenue">0 د.ع</strong>
+        </div>
+        <div class="revenue-box" style="margin-top:10px">
+          <span>إجمالي كل الوقت</span>
+          <strong id="allTimeRevenue">0 د.ع</strong>
+        </div>
+      </div>
+      <div id="stats-services" style="display:none">
+        <div class="week-card">
+          <div class="week-title">أكثر الخدمات طلباً</div>
+          <div id="servicesStats"></div>
+        </div>
+        <div class="week-card">
+          <div class="week-title">أوقات الذروة</div>
+          <div id="peakHours"></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- WAITLIST -->
+  <!-- WAITLIST TAB -->
   <div class="tab-content" id="tab-waitlist">
     <div class="section" style="margin-top:16px">
       <div class="sec-title" style="margin-bottom:14px">قائمة الانتظار</div>
@@ -179,12 +353,123 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     </div>
   </div>
 
-  <!-- SETTINGS -->
+  <!-- SETTINGS TAB -->
   <div class="tab-content" id="tab-settings">
     <div class="section" style="margin-top:16px">
-      <div class="sec-title" style="margin-bottom:10px">تعطيل يوم</div>
-      <div class="disable-info">اضغط على اليوم لتعطيله أو تفعيله. الأيام المعطلة لن يقدر الزبائن يحجزون فيها.</div>
-      <div class="disable-scroll" id="disableScroll"></div>
+
+      <!-- ===== تيليجرام ===== -->
+      <div class="setting-card">
+        <div class="setting-title">✈️ إشعارات تيليجرام</div>
+        <div class="setting-desc">يصلك إشعار فوري على تيليجرام عند كل حجز جديد أو إلغاء.</div>
+
+        <!-- حالة الاتصال -->
+        <div id="tgConnectStatus" class="connect-status connect-status--off">
+          <span id="tgStatusDot" class="status-dot dot-off"></span>
+          <span id="tgStatusText">غير متصل</span>
+        </div>
+
+        <div class="setting-row" style="margin-top:12px">
+          <div class="setting-lbl">🤖 Bot Token</div>
+          <div style="position:relative">
+            <input class="setting-inp" id="tgToken" placeholder="123456789:ABCdef..." type="password"/>
+            <button onclick="toggleVis('tgToken',this)" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#444;cursor:pointer;font-size:14px;">👁</button>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-lbl">🆔 Chat ID</div>
+          <input class="setting-inp" id="tgChatId" placeholder="مثال: 93372553"/>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="save-btn" style="flex:1" onclick="saveTgSettings()">💾 حفظ</button>
+          <button class="save-btn" style="flex:1;background:#111;border:1px solid #333;color:#c9a84c;" onclick="testTelegram()">🔔 اختبار</button>
+        </div>
+
+        <div id="tgStatusMsg" style="display:none;margin-top:10px"></div>
+
+        <div class="info-box" style="margin-top:12px">
+          <div class="info-box-title">📋 كيف تحصل على البيانات؟</div>
+          <div class="info-step"><span class="info-num">1</span> ابحث عن <b>@BotFather</b> في تيليجرام وأنشئ بوت جديد → احصل على الـ Token</div>
+          <div class="info-step"><span class="info-num">2</span> افتح <b>@userinfobot</b> وأرسل له أي رسالة → سيعطيك الـ Chat ID</div>
+          <div class="info-step"><span class="info-num">3</span> أرسل رسالة للبوت أولاً حتى يتمكن من مراسلتك</div>
+        </div>
+      </div>
+
+      <!-- ===== واتساب تلقائي ===== -->
+      <div class="setting-card">
+        <div class="setting-title">💬 إشعارات واتساب التلقائية</div>
+        <div class="setting-desc">إرسال رسائل واتساب للزبائن تلقائياً دون الحاجة لأي إجراء يدوي.</div>
+
+        <!-- عند الحجز -->
+        <div class="wa-feature-row">
+          <div class="wa-feature-info">
+            <div class="wa-feature-name">📩 تأكيد الحجز التلقائي</div>
+            <div class="wa-feature-sub">عند فتح لوحة التحكم يُفتح واتساب تلقائياً لإرسال رسالة تأكيد لكل حجز جديد لم يُرسل له بعد</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="autoConfirmToggle" onchange="saveWaSettings()"/>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+
+        <!-- تذكير قبل ساعة -->
+        <div class="wa-feature-row">
+          <div class="wa-feature-info">
+            <div class="wa-feature-name">⏰ تذكير قبل الموعد بساعة</div>
+            <div class="wa-feature-sub">يفتح واتساب تلقائياً مع تذكير للزبون قبل موعده بساعة</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="autoRemindToggle" onchange="saveWaSettings()"/>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+
+        <div class="info-box" style="margin-top:10px">
+          <div class="info-box-title">⚠️ كيف يعمل؟</div>
+          <div class="info-step"><span class="info-num">1</span> الزبون يحجز من صفحته — <b>لا يُفتح واتساب عنده</b></div>
+          <div class="info-step"><span class="info-num">2</span> عند فتحك للوحة التحكم → يُفتح واتساب تلقائياً ويُرسل رسالة التأكيد للزبون من هاتفك</div>
+          <div class="info-step"><span class="info-num">3</span> كل حجز يُرسل مرة واحدة فقط ولا يتكرر</div>
+        </div>
+
+        <!-- معاينة رسالة التأكيد -->
+        <div style="margin-top:12px">
+          <div class="setting-lbl" style="margin-bottom:6px">معاينة رسالة التأكيد التي يستلمها الزبون:</div>
+          <div class="msg-preview">
+            السلام عليكم [اسم الزبون] 👋<br/><br/>
+            ✅ <b>تم تثبيت حجزك في Salon Art</b><br/><br/>
+            ✂️ الخدمة: [الخدمة]<br/>
+            📅 التاريخ: [اليوم والتاريخ]<br/>
+            ⏰ الساعة: [وقت الموعد]<br/>
+            💰 السعر: [السعر]<br/><br/>
+            ⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.<br/>
+            نشوفك قريب! 🌟
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== تعطيل الأيام ===== -->
+      <div class="setting-card">
+        <div class="setting-title">📅 تعطيل يوم</div>
+        <div class="setting-desc">اضغط على اليوم لتعطيله — لن يتمكن الزبائن من الحجز فيه.</div>
+        <div class="disable-scroll" id="disableScroll"></div>
+      </div>
+
+      <!-- ===== تغيير PIN ===== -->
+      <div class="setting-card">
+        <div class="setting-title">🔒 تغيير رمز الدخول</div>
+        <div class="setting-row">
+          <div class="setting-lbl">الرمز الحالي</div>
+          <input class="setting-inp" id="oldPin" placeholder="••••" type="password" maxlength="4"/>
+        </div>
+        <div class="setting-row">
+          <div class="setting-lbl">الرمز الجديد (4 أرقام)</div>
+          <input class="setting-inp" id="newPin" placeholder="••••" type="password" maxlength="4"/>
+        </div>
+        <button class="save-btn" onclick="changePin()">🔒 تغيير الرمز</button>
+      </div>
+
     </div>
   </div>
 </div>
@@ -192,59 +477,249 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 <div class="toast" id="toast"></div>
 
 <script>
-const BIN_ID  = '69f53bd4aaba8821975f4502';
-const API_KEY = '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum';
-const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-const HEADERS = {'Content-Type':'application/json','X-Master-Key':API_KEY};
-const DAY_NAMES   = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
-const MONTH_NAMES = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-const SLOT_ORDER  = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
-const SLOT_HOURS  = {"5:00 م":17,"6:00 م":18,"7:00 م":19,"8:00 م":20,"9:00 م":21,"10:00 م":22,"11:00 م":23};
+// ============================================================
+// CONFIG
+// ============================================================
+const CONFIG = {
+  BIN_ID:  '69f53bd4aaba8821975f4502',
+  API_KEY: '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum',
+  DEFAULT_PIN: '1234',
+  DEFAULT_TG_TOKEN: '8205449854:AAEy8543td3uSxq7L96y09B73UKn0wwdBZE',
+  DEFAULT_TG_CHAT:  '93372553',
+};
+// ============================================================
+
+const API_URL  = `https://api.jsonbin.io/v3/b/${CONFIG.BIN_ID}`;
+const HDRS     = {'Content-Type':'application/json','X-Master-Key':CONFIG.API_KEY};
+const DAY_NAMES    = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const MONTH_NAMES  = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const SLOT_ORDER   = ["5:00 م","6:00 م","7:00 م","8:00 م","9:00 م","10:00 م","11:00 م"];
+const SLOT_HOURS   = {"5:00 م":17,"6:00 م":18,"7:00 م":19,"8:00 م":20,"9:00 م":21,"10:00 م":22,"11:00 م":23};
 
 let data={bookings:[],waitlist:[],disabledDays:[]};
-let selDateKey="all", activeTab="bookings";
+let selDateKey='all',activeTab='bookings',activeStatsTab='week';
+let lastSyncTime=null;
 
+// ============================================================
+// PIN LOGIC
+// ============================================================
+let pinEntry='';
+const ADMIN_PIN_KEY='salon_admin_pin';
+
+function getPin(){ return localStorage.getItem(ADMIN_PIN_KEY)||CONFIG.DEFAULT_PIN; }
+
+function pinPress(d){
+  if(pinEntry.length>=4)return;
+  pinEntry+=d;
+  updatePinDots();
+  if(pinEntry.length===4) setTimeout(checkPin,120);
+}
+function pinDel(){ pinEntry=pinEntry.slice(0,-1);updatePinDots(); }
+function updatePinDots(){
+  for(let i=0;i<4;i++){
+    document.getElementById('dot'+i).classList.toggle('filled',i<pinEntry.length);
+    document.getElementById('dot'+i).classList.remove('error');
+  }
+}
+function checkPin(){
+  if(pinEntry===getPin()){
+    document.getElementById('pinScreen').style.display='none';
+    document.getElementById('loadingScreen').style.display='flex';
+    initApp();
+  }else{
+    for(let i=0;i<4;i++) document.getElementById('dot'+i).classList.add('error');
+    document.getElementById('pinErr').classList.add('show');
+    setTimeout(()=>{
+      pinEntry='';updatePinDots();
+      document.getElementById('pinErr').classList.remove('show');
+    },1000);
+  }
+}
+function changePin(){
+  const old=document.getElementById('oldPin').value;
+  const nw=document.getElementById('newPin').value;
+  if(old!==getPin()){showToast('❌ الرمز الحالي خاطئ');return;}
+  if(!/^\d{4}$/.test(nw)){showToast('⚠️ الرمز الجديد يجب أن يكون 4 أرقام');return;}
+  localStorage.setItem(ADMIN_PIN_KEY,nw);
+  document.getElementById('oldPin').value='';
+  document.getElementById('newPin').value='';
+  showToast('✅ تم تغيير الرمز بنجاح');
+}
+
+// ============================================================
+// LOGOUT
+// ============================================================
+function logout(){
+  if(!confirm('هل تريد تسجيل الخروج؟'))return;
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('pinScreen').style.display='flex';
+  pinEntry='';updatePinDots();
+}
+
+// ============================================================
+// AUTO REMINDER (1 hour before appointment)
+// ============================================================
+const AUTO_REMIND_KEY='salon_auto_remind';
+function getAutoRemind(){ return localStorage.getItem(AUTO_REMIND_KEY)==='true'; }
+
+// ============================================================
+// AUTO WHATSAPP FROM ADMIN
+// ============================================================
+
+// فحص الحجوزات الجديدة وإرسال واتساب من الـ admin
+function checkNewBookingsAndNotify(){
+  if(!getAutoConfirm()) return;
+  const pending = data.bookings.filter(b => !b.cancelled && !b.waSent);
+  if(!pending.length) return;
+
+  pending.forEach(b => {
+    b.waSent = true;
+    saveData().catch(()=>{ b.waSent = false; });
+
+    const msg = `السلام عليكم ${b.name} 👋\n\n✅ *تم تثبيت حجزك في Salon Art*\n\n✂️ الخدمة: *${b.service}*\n📅 التاريخ: *${b.dateLabel||b.day}*\n⏰ الساعة: *${b.slot}*\n💰 السعر: *${formatPrice(b.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك تلقائياً.\n\nنشوفك قريب! 🌟 — Salon Art ✂️`;
+
+    openWA(b.phone, msg);
+    showToast(`📲 تم إرسال تأكيد الحجز لـ ${b.name}`);
+  });
+}
+
+// فحص التذكيرات قبل ساعة
+function checkAutoReminders(){
+  if(!getAutoRemind()) return;
+  const active = data.bookings.filter(b => !b.cancelled && !b.autoReminded);
+  const now = new Date();
+  active.forEach(b => {
+    if(!b.dateKey) return;
+    const h = SLOT_HOURS[b.slot]; if(!h) return;
+    const slotTime = new Date(b.dateKey + 'T00:00:00');
+    slotTime.setHours(h, 0, 0, 0);
+    const diff = (slotTime - now) / 60000;
+    if(diff >= 55 && diff <= 65){
+      b.autoReminded = true;
+      saveData().catch(()=>{ b.autoReminded = false; });
+      const msg = `السلام عليكم ${b.name} 👋\n\n⏰ *تذكير: موعدك بعد ساعة في Salon Art*\n\n✂️ الخدمة: *${b.service}*\n📅 التاريخ: *${b.dateLabel||b.day}*\n⏰ الساعة: *${b.slot}*\n💰 السعر: *${formatPrice(b.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.\n\nنشوفك قريب! 🌟`;
+      openWA(b.phone, msg);
+      showToast(`📲 تذكير تلقائي أُرسل لـ ${b.name}`);
+    }
+  });
+}
+const TG_TOKEN_KEY='salon_tg_token';
+const TG_CHAT_KEY ='salon_tg_chat';
+
+function getTgToken(){ return localStorage.getItem(TG_TOKEN_KEY)||CONFIG.DEFAULT_TG_TOKEN; }
+function getTgChat() { return localStorage.getItem(TG_CHAT_KEY)||CONFIG.DEFAULT_TG_CHAT; }
+
+function saveTgSettings(){
+  const t=document.getElementById('tgToken').value.trim();
+  const c=document.getElementById('tgChatId').value.trim();
+  if(!t||!c){showToast('⚠️ أدخل الـ Token والـ Chat ID');return;}
+  localStorage.setItem(TG_TOKEN_KEY,t);
+  localStorage.setItem(TG_CHAT_KEY,c);
+  showToast('✅ تم حفظ إعدادات تيليجرام');
+}
+
+async function sendTelegram(msg){
+  const token=getTgToken();const chat=getTgChat();
+  if(!token||!chat)return;
+  try{
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:chat,text:msg,parse_mode:'HTML'})
+    });
+  }catch(e){ console.log('Telegram error',e); }
+}
+
+async function testTelegram(){
+  const token=document.getElementById('tgToken').value.trim()||getTgToken();
+  const chat=document.getElementById('tgChatId').value.trim()||getTgChat();
+  if(!token||!chat){showToast('⚠️ أدخل الـ Token والـ Chat ID أولاً');return;}
+  const msgEl=document.getElementById('tgStatusMsg');
+  msgEl.style.display='block';msgEl.className='tg-status';msgEl.textContent='⏳ جاري الاختبار...';
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:chat,text:'✅ <b>Salon Art</b>\n\n🔗 الاتصال يعمل بشكل صحيح!\n\nستصلك الإشعارات التالية:\n• 🎉 حجز جديد\n• 🗑️ إلغاء حجز\n• ⛔ إلغاء بسبب التأخر',parse_mode:'HTML'})
+    });
+    const d=await r.json();
+    if(d.ok){
+      msgEl.className='tg-status tg-ok';msgEl.textContent='✅ الاتصال يعمل! — تحقق من تيليجرام';
+      localStorage.setItem(TG_TOKEN_KEY,token);localStorage.setItem(TG_CHAT_KEY,chat);
+      // تحديث مؤشر الاتصال
+      document.getElementById('tgConnectStatus').className='connect-status connect-status--on';
+      document.getElementById('tgStatusDot').className='status-dot dot-on';
+      document.getElementById('tgStatusText').textContent='متصل ✓ — الاتصال مؤكد';
+      showToast('✅ تيليجرام يعمل!');
+    }else{
+      msgEl.className='tg-status tg-fail';msgEl.textContent='❌ خطأ: '+d.description;
+    }
+  }catch(e){
+    msgEl.className='tg-status tg-fail';msgEl.textContent='❌ تعذر الاتصال بتيليجرام';
+  }
+}
+
+// ============================================================
+// DATA
+// ============================================================
 function makeDateKey(d){ return d.toISOString().split('T')[0]; }
 function makeLabel(d){ return `${DAY_NAMES[d.getDay()]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`; }
 function formatPrice(p){ return Number(p).toLocaleString('ar-IQ')+' د.ع'; }
-
 function getNext7Days(){
   const days=[];const today=new Date();today.setHours(0,0,0,0);
   for(let i=0;i<7;i++){const d=new Date(today);d.setDate(today.getDate()+i);days.push(d);}
   return days;
 }
-
 function todayKey(){ return makeDateKey(new Date()); }
 
 async function loadData(){
   try{
-    const r=await fetch(API_URL,{headers:{'X-Master-Key':API_KEY}});
-    const d=await r.json();data=d.record;
-    if(!data.bookings) data.bookings=[];
-    if(!data.waitlist) data.waitlist=[];
+    const r=await fetch(API_URL,{headers:{'X-Master-Key':CONFIG.API_KEY}});
+    if(!r.ok) throw new Error('fetch error');
+    const d=await r.json();
+    data=d.record||{};
+    if(!data.bookings)    data.bookings=[];
+    if(!data.waitlist)    data.waitlist=[];
     if(!data.disabledDays) data.disabledDays=[];
-  }catch{}
+    lastSyncTime=new Date();
+    updateSyncBar(true);
+  }catch(e){
+    updateSyncBar(false);
+    showToast('❌ خطأ في تحميل البيانات');
+  }
 }
 
 async function saveData(){
-  await fetch(API_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(data)});
+  try{
+    const r=await fetch(API_URL,{method:'PUT',headers:HDRS,body:JSON.stringify(data)});
+    if(!r.ok) throw new Error('save error');
+    lastSyncTime=new Date();
+    updateSyncBar(true);
+  }catch(e){
+    updateSyncBar(false);
+    showToast('❌ فشل حفظ البيانات');
+    throw e;
+  }
 }
 
-// التأخر يحسب بالتاريخ والوقت الحقيقي
+function updateSyncBar(ok){
+  const status=document.getElementById('syncStatus');
+  const last=document.getElementById('lastSync');
+  if(lastSyncTime) last.textContent='آخر تحديث: '+lastSyncTime.toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'});
+  status.style.color=ok?'#2a6a2a':'#e05050';
+  status.textContent=ok?'متزامن ✓':'خطأ في الاتصال';
+}
+
 function isLate(b){
-  const now=new Date();
-  const bDate=b.dateKey||null;
-  if(!bDate) return false;
-  const todayStr=todayKey();
-  if(bDate!==todayStr) return false; // يوم ثاني مو متأخر
-  const h=SLOT_HOURS[b.slot];if(!h) return false;
-  const slotTime=new Date();slotTime.setHours(h,0,0,0);
-  return (now-slotTime)>15*60*1000;
+  const now=new Date();const bDate=b.dateKey||null;
+  if(!bDate)return false;
+  if(bDate!==todayKey())return false;
+  const h=SLOT_HOURS[b.slot];if(!h)return false;
+  const st=new Date();st.setHours(h,0,0,0);
+  return (now-st)>15*60*1000;
 }
-
 function lateMin(b){
-  const now=new Date();
-  const h=SLOT_HOURS[b.slot];if(!h)return 0;
+  const now=new Date();const h=SLOT_HOURS[b.slot];if(!h)return 0;
   const st=new Date();st.setHours(h,0,0,0);
   return Math.floor((now-st)/60000);
 }
@@ -252,19 +727,35 @@ function lateMin(b){
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.style.display='block';
-  setTimeout(()=>t.style.display='none',3000);
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.style.display='none',3500);
 }
 
+// ============================================================
+// TAB SWITCHING
+// ============================================================
 function switchTab(tab){
   activeTab=tab;
   document.querySelectorAll('.main-tab').forEach((el,i)=>{
-    el.classList.toggle('active',['bookings','stats','waitlist','settings'][i]===tab);
+    el.classList.toggle('active',['bookings','calendar','stats','waitlist','settings'][i]===tab);
   });
   document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   render();
 }
 
+function switchStats(t){
+  activeStatsTab=t;
+  ['week','month','services'].forEach(s=>{
+    document.getElementById('stab-'+s).classList.toggle('active',s===t);
+    document.getElementById('stats-'+s).style.display=s===t?'block':'none';
+  });
+  renderStats();
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
 function openWA(phone,msg){
   const clean=phone.replace(/\D/g,'');
   const intl=clean.startsWith('0')?'964'+clean.slice(1):clean;
@@ -273,44 +764,68 @@ function openWA(phone,msg){
 
 async function remind(id){
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
-  b.reminded=true;await saveData();
-  const msg=`السلام عليكم ${b.name} 👋\n\n🔔 *تذكير بموعدك في Salon Art*\n\n✂️ الخدمة: *${b.service}*\n📅 التاريخ: *${b.dateLabel||b.day}*\n⏰ الساعة: *${b.slot}*\n💰 السعر: *${formatPrice(b.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.\n\nنشوفك قريب! 🌟`;
-  openWA(b.phone,msg);render();
-  showToast(`✅ تم إرسال تذكير لـ ${b.name}`);
+  b.reminded=true;
+  try{
+    await saveData();
+    const msg=`السلام عليكم ${b.name} 👋\n\n🔔 *تذكير بموعدك في Salon Art*\n\n✂️ الخدمة: *${b.service}*\n📅 التاريخ: *${b.dateLabel||b.day}*\n⏰ الساعة: *${b.slot}*\n💰 السعر: *${formatPrice(b.price)}*\n\n⚠️ التأخر أكثر من 15 دقيقة يلغي حجزك.\n\nنشوفك قريب! 🌟`;
+    openWA(b.phone,msg);
+    render();showToast(`✅ تم إرسال تذكير لـ ${b.name}`);
+  }catch(e){b.reminded=false;}
 }
 
 async function cancelBooking(id){
-  const b=data.bookings.find(x=>x.id===id);
-  data.bookings=data.bookings.filter(x=>x.id!==id);
-  await saveData();render();showToast(`🗑️ تم إلغاء موعد ${b?.name}`);
+  if(!confirm('هل تريد إلغاء هذا الحجز؟'))return;
+  const b=data.bookings.find(x=>x.id===id);if(!b)return;
+  // ✅ FIX: علامة إلغاء بدل الحذف — لحفظ السجل
+  b.cancelled=true;b.cancelledAt=Date.now();
+  try{
+    await saveData();render();
+    showToast(`🗑️ تم إلغاء موعد ${b.name}`);
+    sendTelegram(`🗑️ <b>إلغاء حجز</b>\n\n👤 ${b.name}\n✂️ ${b.service}\n📅 ${b.dateLabel||b.day}\n⏰ ${b.slot}`);
+  }catch(e){b.cancelled=false;b.cancelledAt=null;}
 }
 
 async function cancelLate(id){
-  const b=data.bookings.find(x=>x.id===id);
-  data.bookings=data.bookings.filter(x=>x.id!==id);
-  await saveData();render();showToast(`⛔ أُلغي حجز ${b?.name} بسبب التأخر`);
+  const b=data.bookings.find(x=>x.id===id);if(!b)return;
+  const mins=lateMin(b);
+  b.cancelled=true;b.cancelledAt=Date.now();b.cancelReason='late';
+  try{
+    await saveData();render();
+    showToast(`⛔ أُلغي حجز ${b.name} بسبب التأخر`);
+    sendTelegram(`⛔ <b>إلغاء بسبب التأخر</b>\n\n👤 ${b.name} — تأخر ${mins} دقيقة\n⏰ ${b.slot}`);
+  }catch(e){b.cancelled=false;b.cancelledAt=null;b.cancelReason=null;}
 }
 
 async function notifyWait(id){
   const w=data.waitlist.find(x=>x.id===id);if(!w)return;
-  const msg=`السلام عليكم ${w.name} 👋\n\n🎉 *تفرغ وقت في Salon Art ليوم ${w.day}!*\n\nاحجز الحين:\n👉 mom18art-dev.github.io/salon-art/customer.html\n\nSalon Art ✂️`;
+  const msg=`السلام عليكم ${w.name} 👋\n\n🎉 *تفرغ وقت في Salon Art ليوم ${w.day}!*\n\nاحجز الحين:\n👉 [رابط الحجز]\n\nSalon Art ✂️`;
   openWA(w.phone,msg);
   data.waitlist=data.waitlist.filter(x=>x.id!==id);
-  await saveData();render();showToast(`✅ تم إبلاغ ${w.name}`);
+  try{await saveData();render();showToast(`✅ تم إبلاغ ${w.name}`);}
+  catch(e){data.waitlist.push(w);}
 }
 
 async function toggleDay(key){
-  if(!data.disabledDays) data.disabledDays=[];
-  if(data.disabledDays.includes(key)){
+  if(!data.disabledDays)data.disabledDays=[];
+  const wasOff=data.disabledDays.includes(key);
+  if(wasOff){
     data.disabledDays=data.disabledDays.filter(d=>d!==key);
-    showToast('✅ تم تفعيل اليوم');
   }else{
     data.disabledDays.push(key);
-    showToast('🚫 تم تعطيل اليوم');
   }
-  await saveData();render();
+  try{
+    await saveData();
+    showToast(wasOff?'✅ تم تفعيل اليوم':'🚫 تم تعطيل اليوم');
+    render();
+  }catch(e){
+    if(wasOff) data.disabledDays.push(key);
+    else data.disabledDays=data.disabledDays.filter(d=>d!==key);
+  }
 }
 
+// ============================================================
+// RENDER BOOKINGS
+// ============================================================
 function renderBookings(){
   const active=data.bookings.filter(b=>!b.cancelled);
   const reminded=active.filter(b=>b.reminded).length;
@@ -319,7 +834,6 @@ function renderBookings(){
   document.getElementById('st-pending').textContent=active.length-reminded;
   document.getElementById('st-reminded').textContent=reminded;
 
-  // Date tabs from 7 days
   const days=getNext7Days();
   const tabs=document.getElementById('dateTabs');tabs.innerHTML='';
   const allBtn=document.createElement('button');
@@ -339,7 +853,7 @@ function renderBookings(){
 
   const filtered=selDateKey==='all'?active:active.filter(b=>b.dateKey===selDateKey);
   const sorted=[...filtered].sort((a,b)=>{
-    if(a.dateKey!==b.dateKey) return (a.dateKey||'').localeCompare(b.dateKey||'');
+    if(a.dateKey!==b.dateKey)return (a.dateKey||'').localeCompare(b.dateKey||'');
     return SLOT_ORDER.indexOf(a.slot)-SLOT_ORDER.indexOf(b.slot);
   });
 
@@ -347,8 +861,7 @@ function renderBookings(){
 
   const list=document.getElementById('cardsList');
   if(!sorted.length){
-    list.innerHTML=`<div class="empty"><div class="empty-icon">✂️</div><p>ما في حجوزات</p></div>`;
-    return;
+    list.innerHTML=`<div class="empty"><div class="empty-icon">✂️</div><p>ما في حجوزات</p></div>`;return;
   }
   list.innerHTML=sorted.map(b=>{
     const late=isLate(b);const mins=late?lateMin(b):0;
@@ -381,25 +894,121 @@ function renderBookings(){
   }).join('');
 }
 
-function renderStats(){
+// ============================================================
+// RENDER CALENDAR
+// ============================================================
+function renderCalendar(){
   const active=data.bookings.filter(b=>!b.cancelled);
-  const totalRevenue=active.reduce((s,b)=>s+(b.price||0),0);
-  document.getElementById('totalRevenue').textContent=totalRevenue.toLocaleString('ar-IQ')+' د.ع';
   const days=getNext7Days();
-  const max=Math.max(...days.map(d=>active.filter(b=>b.dateKey===makeDateKey(d)).length),1);
-  document.getElementById('weeklyRows').innerHTML=days.map(d=>{
-    const key=makeDateKey(d);
-    const cnt=active.filter(b=>b.dateKey===key).length;
-    const rev=active.filter(b=>b.dateKey===key).reduce((s,b)=>s+(b.price||0),0);
-    const pct=Math.round((cnt/max)*100);
-    return `<div class="week-row">
-      <span class="week-day">${DAY_NAMES[d.getDay()]} ${d.getDate()}</span>
-      <div class="week-bar-wrap"><div class="week-bar" style="width:${pct}%"></div></div>
-      <span class="week-count">${cnt} ${rev>0?'• '+rev.toLocaleString():''}</span>
-    </div>`;
-  }).join('');
+  const wrap=document.getElementById('calendarView');
+  let html=`<div class="cal-grid">`;
+  days.forEach(d=>{
+    html+=`<div class="cal-day-head">${DAY_NAMES[d.getDay()]}<br/><b>${d.getDate()}</b></div>`;
+  });
+  // slots rows
+  SLOT_ORDER.forEach(slot=>{
+    days.forEach(d=>{
+      const key=makeDateKey(d);
+      const booking=active.find(b=>b.dateKey===key&&b.slot===slot);
+      const late=booking&&isLate(booking);
+      html+=`<div class="cal-slot-wrap">
+        <div class="cal-date">${slot.replace(' م','')}</div>
+        ${booking
+          ?`<div class="cal-slot ${late?'cs-late':'cs-bkd'}" title="${booking.name}">${booking.name.split(' ')[0]}</div>`
+          :`<div class="cal-slot cs-free">✓</div>`
+        }
+      </div>`;
+    });
+  });
+  html+=`</div>`;
+  html+=`<div style="display:flex;gap:10px;padding:0 0 10px;font-size:11px;color:#444">
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:#0a1a0a;display:inline-block"></span>محجوز</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:#2a0808;display:inline-block"></span>متأخر</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:#1a1a1a;display:inline-block"></span>متاح</span>
+  </div>`;
+  wrap.innerHTML=html;
 }
 
+// ============================================================
+// RENDER STATS
+// ============================================================
+function renderStats(){
+  const active=data.bookings.filter(b=>!b.cancelled);
+
+  if(activeStatsTab==='week'){
+    const weekRev=active.filter(b=>getNext7Days().map(d=>makeDateKey(d)).includes(b.dateKey)).reduce((s,b)=>s+(b.price||0),0);
+    document.getElementById('totalRevenue').textContent=weekRev.toLocaleString('ar-IQ')+' د.ع';
+    const days=getNext7Days();
+    const max=Math.max(...days.map(d=>active.filter(b=>b.dateKey===makeDateKey(d)).length),1);
+    document.getElementById('weeklyRows').innerHTML=days.map(d=>{
+      const key=makeDateKey(d);
+      const cnt=active.filter(b=>b.dateKey===key).length;
+      const rev=active.filter(b=>b.dateKey===key).reduce((s,b)=>s+(b.price||0),0);
+      const pct=Math.round((cnt/max)*100);
+      return `<div class="week-row">
+        <span class="week-day">${DAY_NAMES[d.getDay()]} ${d.getDate()}</span>
+        <div class="week-bar-wrap"><div class="week-bar" style="width:${pct}%"></div></div>
+        <span class="week-count">${cnt} ${rev>0?'• '+rev.toLocaleString():''}</span>
+      </div>`;
+    }).join('');
+  }
+
+  if(activeStatsTab==='month'){
+    const now=new Date();
+    const monthBookings=active.filter(b=>{
+      if(!b.dateKey)return false;
+      const d=new Date(b.dateKey);
+      return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
+    });
+    const monthRev=monthBookings.reduce((s,b)=>s+(b.price||0),0);
+    const allRev=active.reduce((s,b)=>s+(b.price||0),0);
+    document.getElementById('monthRevenue').textContent=monthRev.toLocaleString('ar-IQ')+' د.ع';
+    document.getElementById('allTimeRevenue').textContent=allRev.toLocaleString('ar-IQ')+' د.ع';
+    // weekly breakdown this month
+    const weeks={};
+    monthBookings.forEach(b=>{
+      const d=new Date(b.dateKey);
+      const wk=Math.ceil(d.getDate()/7);
+      if(!weeks[wk])weeks[wk]={cnt:0,rev:0};
+      weeks[wk].cnt++;weeks[wk].rev+=(b.price||0);
+    });
+    document.getElementById('monthlyRows').innerHTML=Object.entries(weeks).map(([w,v])=>`
+      <div class="week-row">
+        <span class="week-day">الأسبوع ${w}</span>
+        <span class="week-count">${v.cnt} حجز • ${v.rev.toLocaleString()} د.ع</span>
+      </div>`).join('')||'<div style="color:#333;font-size:13px;padding:10px">لا توجد بيانات هذا الشهر</div>';
+  }
+
+  if(activeStatsTab==='services'){
+    const svcCount={};const svcRev={};
+    active.forEach(b=>{
+      const n=b.service||'غير محدد';
+      svcCount[n]=(svcCount[n]||0)+1;
+      svcRev[n]=(svcRev[n]||0)+(b.price||0);
+    });
+    const sorted=Object.entries(svcCount).sort((a,b)=>b[1]-a[1]);
+    document.getElementById('servicesStats').innerHTML=sorted.map(([name,cnt])=>`
+      <div class="top-service">
+        <span class="top-service-name">${name}</span>
+        <span class="top-service-count">${cnt} حجز • ${(svcRev[name]||0).toLocaleString()} د.ع</span>
+      </div>`).join('')||'<div style="color:#333;padding:10px;font-size:13px">لا توجد بيانات</div>';
+
+    const slotCount={};
+    active.forEach(b=>{ slotCount[b.slot]=(slotCount[b.slot]||0)+1; });
+    const sortedSlots=SLOT_ORDER.map(s=>({slot:s,cnt:slotCount[s]||0})).sort((a,b)=>b.cnt-a.cnt);
+    const maxSlot=Math.max(...sortedSlots.map(s=>s.cnt),1);
+    document.getElementById('peakHours').innerHTML=sortedSlots.map(s=>`
+      <div class="week-row">
+        <span class="week-day">${s.slot}</span>
+        <div class="week-bar-wrap"><div class="week-bar" style="width:${Math.round(s.cnt/maxSlot*100)}%"></div></div>
+        <span class="week-count">${s.cnt}</span>
+      </div>`).join('');
+  }
+}
+
+// ============================================================
+// RENDER WAITLIST
+// ============================================================
 function renderWaitlist(){
   const list=document.getElementById('waitlistCards');
   if(!data.waitlist||!data.waitlist.length){
@@ -412,7 +1021,35 @@ function renderWaitlist(){
     </div>`).join('');
 }
 
+// ============================================================
+// RENDER SETTINGS
+// ============================================================
 function renderSettings(){
+  // ── تيليجرام ──
+  const tok=getTgToken(); const chat=getTgChat();
+  document.getElementById('tgToken').value=tok;
+  document.getElementById('tgChatId').value=chat;
+  // حالة الاتصال — نعتبره متصل إذا البيانات موجودة
+  const statusEl=document.getElementById('tgConnectStatus');
+  const dotEl=document.getElementById('tgStatusDot');
+  const textEl=document.getElementById('tgStatusText');
+  if(tok&&chat){
+    statusEl.className='connect-status connect-status--on';
+    dotEl.className='status-dot dot-on';
+    textEl.textContent='متصل ✓ — البيانات محفوظة';
+    // إخفاء رسالة القديمة
+    document.getElementById('tgStatusMsg').style.display='none';
+  }else{
+    statusEl.className='connect-status connect-status--off';
+    dotEl.className='status-dot dot-off';
+    textEl.textContent='غير متصل — أدخل البيانات أدناه';
+  }
+
+  // ── واتساب ──
+  document.getElementById('autoConfirmToggle').checked = getAutoConfirm();
+  document.getElementById('autoRemindToggle').checked  = getAutoRemind();
+
+  // ── تعطيل الأيام ──
   const g=document.getElementById('disableScroll');g.innerHTML='';
   const days=getNext7Days();
   days.forEach(d=>{
@@ -428,6 +1065,7 @@ function renderSettings(){
 
 function render(){
   if(activeTab==='bookings') renderBookings();
+  else if(activeTab==='calendar') renderCalendar();
   else if(activeTab==='stats') renderStats();
   else if(activeTab==='waitlist') renderWaitlist();
   else if(activeTab==='settings') renderSettings();
@@ -435,12 +1073,44 @@ function render(){
 
 async function loadAndRender(){ await loadData();render(); }
 
-(async()=>{
+// ============================================================
+// INIT
+// ============================================================
+function saveWaSettings(){
+  const autoConfirm=document.getElementById('autoConfirmToggle').checked;
+  const autoRemind=document.getElementById('autoRemindToggle').checked;
+  localStorage.setItem('salon_auto_confirm', autoConfirm?'true':'false');
+  localStorage.setItem(AUTO_REMIND_KEY, autoRemind?'true':'false');
+  showToast(autoRemind||autoConfirm ? '✅ تم حفظ إعدادات واتساب' : '🔕 تم إيقاف إشعارات واتساب');
+}
+
+function getAutoConfirm(){ return localStorage.getItem('salon_auto_confirm')!=='false'; } // default ON
+
+function toggleVis(id,btn){
+  const inp=document.getElementById(id);
+  if(inp.type==='password'){inp.type='text';btn.textContent='🙈';}
+  else{inp.type='password';btn.textContent='👁';}
+}
+
+async function initApp(){
   await loadAndRender();
   document.getElementById('loadingScreen').style.display='none';
   document.getElementById('mainApp').style.display='block';
-  setInterval(loadAndRender,60000);
-})();
+
+  // فحص فوري عند فتح اللوحة
+  setTimeout(()=>{
+    checkNewBookingsAndNotify();
+    checkAutoReminders();
+  }, 1500);
+
+  // فحص كل دقيقة
+  setInterval(async()=>{
+    await loadData();
+    checkNewBookingsAndNotify();
+    checkAutoReminders();
+    if(activeTab !== 'settings') render();
+  }, 60000);
+}
 </script>
 </body>
 </html>
