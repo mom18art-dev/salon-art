@@ -216,7 +216,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 const CONFIG = {
   BIN_ID:  '69f53bd4aaba8821975f4502',
   API_KEY: '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum',
-  TG_BOT_TOKEN: '8205449854:AAEy8543td3uSxq7L96y09B73UKn0wwdBZE',
+  TG_BOT_TOKEN: '8677629637:AAH__ONSWYplu8PoAae-Ca0RQan8WhS1HSM',
   TG_CHAT_ID:   '93372553',
 };
 // ============================================================
@@ -444,7 +444,8 @@ async function handleBook(){
     day:selDateLabel,
     createdAt:Date.now(),
     bookedAt:new Date().toLocaleTimeString('ar-IQ'),
-    reminded:false,cancelled:false,cancelledAt:null
+    reminded:false,cancelled:false,cancelledAt:null,
+    waSent:false
   };
   data.bookings.push(booking);
 

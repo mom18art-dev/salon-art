@@ -484,7 +484,7 @@ const CONFIG = {
   BIN_ID:  '69f53bd4aaba8821975f4502',
   API_KEY: '$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum',
   DEFAULT_PIN: '1234',
-  DEFAULT_TG_TOKEN: '8205449854:AAEy8543td3uSxq7L96y09B73UKn0wwdBZE',
+  DEFAULT_TG_TOKEN: '8677629637:AAH__ONSWYplu8PoAae-Ca0RQan8WhS1HSM',
   DEFAULT_TG_CHAT:  '93372553',
 };
 // ============================================================
@@ -1096,6 +1096,9 @@ async function initApp(){
   await loadAndRender();
   document.getElementById('loadingScreen').style.display='none';
   document.getElementById('mainApp').style.display='block';
+
+  // إرسال إشعار تيليجرام عند فتح اللوحة
+  sendTelegram(`🟢 <b>Salon Art</b> — لوحة التحكم مفتوحة\n🕐 ${new Date().toLocaleTimeString('ar-IQ')}`);
 
   // فحص فوري عند فتح اللوحة
   setTimeout(()=>{
