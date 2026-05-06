@@ -303,7 +303,8 @@ function isSlotPast(dateKey,slot){
   const h=SLOT_HOURS[slot];if(!h)return false;
   const now=new Date();
   const slotTime=new Date();slotTime.setHours(h,0,0,0);
-  return (slotTime-now)<30*60*1000;
+  // يخفي الوقت اللي فات بالكامل — الزبون ما يشوف إلا من الوقت الحالي فصاعداً
+  return now>=slotTime;
 }
 
 function isBooked(dateKey,slot){return data.bookings.some(b=>b.dateKey===dateKey&&b.slot===slot&&!b.cancelled);}

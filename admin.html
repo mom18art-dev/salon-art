@@ -86,6 +86,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
 .wa-btn:disabled{background:#0a1a0f;color:#1a4a1a;cursor:default;}
 .cancel-btn{background:#1a0808;border:1px solid #3a1010;border-radius:9px;padding:11px 14px;color:#e05050;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
 .late-action{width:100%;margin-top:8px;background:#c04040;border:none;border-radius:9px;padding:11px;color:#fff;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
+.arrived-btn{flex:1;background:linear-gradient(135deg,#1a4a8a,#2060cc);color:#fff;border:none;border-radius:9px;padding:11px 10px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
 
 /* ===== CALENDAR VIEW ===== */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px;}
@@ -785,7 +786,34 @@ async function cancelBooking(id){
   }catch(e){b.cancelled=false;b.cancelledAt=null;}
 }
 
-async function cancelLate(id){
+async function markArrived(id){
+  const b=data.bookings.find(x=>x.id===id);if(!b)return;
+  // حذف الحجز نهائياً — الزبون وصل وخلص
+  data.bookings=data.bookings.filter(x=>x.id!==id);
+  try{
+    await saveData();
+    render();
+    showToast(`💈 ${b.name} وصل — تم حذف الحجز`);
+    sendTelegram(`💈 <b>وصل الزبون</b>\n\n👤 ${b.name}\n✂️ ${b.service}\n⏰ ${b.slot}`);
+  }catch(e){
+    data.bookings.push(b);
+  }
+}
+
+// حذف حجوزات اليوم بعد منتصف الليل تلقائياً
+function autoCleanOldBookings(){
+  const today=todayKey();
+  const before=data.bookings.length;
+  // احذف كل حجز تاريخه أقل من اليوم (أمس وما قبل)
+  data.bookings=data.bookings.filter(b=>{
+    if(!b.dateKey) return true;
+    return b.dateKey>=today;
+  });
+  if(data.bookings.length!==before){
+    saveData().catch(()=>{});
+    showToast('🗑️ تم حذف حجوزات الأيام السابقة تلقائياً');
+  }
+}
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
   const mins=lateMin(b);
   b.cancelled=true;b.cancelledAt=Date.now();b.cancelReason='late';
@@ -887,6 +915,7 @@ function renderBookings(){
         <button class="wa-btn" onclick="remind('${b.id}')" ${b.reminded?'disabled':''}>
           ${waIcon} ${b.reminded?'تم التذكير':'أرسل تذكير'}
         </button>
+        <button class="arrived-btn" onclick="markArrived('${b.id}')">✅ وصل</button>
         <button class="cancel-btn" onclick="cancelBooking('${b.id}')">إلغاء</button>
       </div>
       ${late?`<button class="late-action" onclick="cancelLate('${b.id}')">⛔ إلغاء بسبب التأخر (${mins} دقيقة)</button>`:''}
@@ -1097,6 +1126,9 @@ async function initApp(){
   document.getElementById('loadingScreen').style.display='none';
   document.getElementById('mainApp').style.display='block';
 
+  // تنظيف حجوزات الأيام السابقة فوراً
+  autoCleanOldBookings();
+
   // إرسال إشعار تيليجرام عند فتح اللوحة
   sendTelegram(`🟢 <b>Salon Art</b> — لوحة التحكم مفتوحة\n🕐 ${new Date().toLocaleTimeString('ar-IQ')}`);
 
@@ -1109,6 +1141,7 @@ async function initApp(){
   // فحص كل دقيقة
   setInterval(async()=>{
     await loadData();
+    autoCleanOldBookings();
     checkNewBookingsAndNotify();
     checkAutoReminders();
     if(activeTab !== 'settings') render();
