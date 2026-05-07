@@ -1099,7 +1099,6 @@ async function initApp(){
   await loadAndRender();
   document.getElementById('loadingScreen').style.display='none';
   document.getElementById('mainApp').style.display='block';
-  notify('Salon Art 🟢', `لوحة التحكم مفتوحة — ${new Date().toLocaleTimeString('ar-IQ')}`);
   setInterval(async()=>{
     await loadData();
     if(activeTab!=='settings') render();
