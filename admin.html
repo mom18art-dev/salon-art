@@ -438,9 +438,8 @@ let lastSyncTime=null;
 // PIN LOGIC
 // ============================================================
 let pinEntry='';
-const ADMIN_PIN_KEY='salon_admin_pin';
 
-function getPin(){ return localStorage.getItem('salon_admin_pin')||'1234'; }
+function getPin(){ return (typeof data!=='undefined' && data.adminPin) ? data.adminPin : CONFIG.DEFAULT_PIN; }
 
 function pinPress(d){
   if(pinEntry.length>=4)return;
@@ -456,34 +455,53 @@ function updatePinDots(){
   }
 }
 function checkPin(){
-  var correctPin = localStorage.getItem('salon_admin_pin') || '1234';
-  if(pinEntry === correctPin){
-    document.getElementById('pinScreen').style.display='none';
-    document.getElementById('loadingScreen').style.display='flex';
-    var wait = setInterval(function(){
-      if(typeof initApp === 'function'){
-        clearInterval(wait);
-        initApp();
-      }
-    }, 30);
-  }else{
-    for(var i=0;i<4;i++) document.getElementById('dot'+i).classList.add('error');
-    document.getElementById('pinErr').classList.add('show');
-    setTimeout(function(){
+  var tryPin = pinEntry;
+  document.getElementById('pinScreen').style.display='none';
+  document.getElementById('loadingScreen').style.display='flex';
+  // نحمل البيانات ونتحقق من الرمز
+  fetch('https://api.jsonbin.io/v3/b/69f53bd4aaba8821975f4502',{
+    headers:{'X-Master-Key':'$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum'}
+  }).then(function(r){return r.json();}).then(function(d){
+    var realPin = (d.record && d.record.adminPin) ? d.record.adminPin : '1234';
+    if(tryPin===realPin){
+      initApp();
+    }else{
+      document.getElementById('loadingScreen').style.display='none';
+      document.getElementById('pinScreen').style.display='flex';
       pinEntry=''; updatePinDots();
-      document.getElementById('pinErr').classList.remove('show');
-    },1000);
-  }
+      for(var i=0;i<4;i++) document.getElementById('dot'+i).classList.add('error');
+      document.getElementById('pinErr').classList.add('show');
+      setTimeout(function(){ document.getElementById('pinErr').classList.remove('show'); },1000);
+    }
+  }).catch(function(){
+    // فشل الاتصال — نقبل 1234
+    if(tryPin==='1234'){ initApp(); }
+    else{
+      document.getElementById('loadingScreen').style.display='none';
+      document.getElementById('pinScreen').style.display='flex';
+      pinEntry=''; updatePinDots();
+      for(var i=0;i<4;i++) document.getElementById('dot'+i).classList.add('error');
+      document.getElementById('pinErr').classList.add('show');
+      setTimeout(function(){ document.getElementById('pinErr').classList.remove('show'); },1000);
+    }
+  });
 }
 async function changePin(){
   const old=document.getElementById('oldPin').value;
   const nw=document.getElementById('newPin').value;
   if(old!==getPin()){showToast('❌ الرمز الحالي خاطئ');return;}
   if(!/^\d{4}$/.test(nw)){showToast('⚠️ الرمز الجديد يجب أن يكون 4 أرقام');return;}
-  localStorage.setItem('salon_admin_pin', nw);
-  document.getElementById('oldPin').value='';
-  document.getElementById('newPin').value='';
-  showToast('✅ تم تغيير الرمز بنجاح');
+  const oldPin=data.adminPin;
+  data.adminPin=nw;
+  try{
+    await saveData();
+    document.getElementById('oldPin').value='';
+    document.getElementById('newPin').value='';
+    showToast('✅ تم تغيير الرمز — موحد على كل الأجهزة');
+  }catch(e){
+    data.adminPin=oldPin;
+    showToast('❌ فشل الحفظ');
+  }
 }
 
 // ============================================================
