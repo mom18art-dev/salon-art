@@ -257,7 +257,35 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
     <div class="section" style="margin-top:16px">
       <div class="sec-row">
         <div class="sec-title">الحجوزات</div>
-        <button class="refresh-btn" onclick="loadAndRender()">🔄 تحديث</button>
+        <div style="display:flex;gap:6px;">
+          <button class="refresh-btn" onclick="showManualBooking()">➕ حجز يدوي</button>
+          <button class="refresh-btn" onclick="loadAndRender()">🔄 تحديث</button>
+        </div>
+      </div>
+
+      <!-- فورم الحجز اليدوي -->
+      <div id="manualForm" style="display:none;background:#111;border:1px solid #c9a84c33;border-radius:12px;padding:16px;margin-bottom:14px;">
+        <div style="font-size:12px;font-weight:700;color:#c9a84c;margin-bottom:12px;">➕ حجز يدوي (اتصال هاتفي)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <input id="mName" class="setting-inp" placeholder="اسم الزبون..." maxlength="30"/>
+          <select id="mService" class="setting-inp">
+            <option value="">اختار الخدمة</option>
+            <option value="حلاقة كاملة" data-price="15000">حلاقة كاملة — 15,000</option>
+            <option value="تحديد ولحية" data-price="10000">تحديد ولحية — 10,000</option>
+            <option value="شسوار" data-price="5000">شسوار — 5,000</option>
+            <option value="طفل" data-price="10000">طفل — 10,000</option>
+          </select>
+          <select id="mDay" class="setting-inp" onchange="updateManualSlots()">
+            <option value="">اختار اليوم</option>
+          </select>
+          <select id="mSlot" class="setting-inp">
+            <option value="">اختار الساعة</option>
+          </select>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <button class="save-btn" style="flex:1" onclick="saveManualBooking()">✅ حفظ الحجز</button>
+            <button class="save-btn" style="flex:1;background:#1a1a1a;border:1px solid #333;color:#888;" onclick="hideManualBooking()">إلغاء</button>
+          </div>
+        </div>
       </div>
       <div class="date-tabs" id="dateTabs"></div>
       <div id="cardsList"></div>
@@ -911,6 +939,77 @@ async function sendTelegram(msg){
       body:JSON.stringify({chat_id:CONFIG.TG_CHAT,text:msg,parse_mode:'HTML'})
     });
   }catch(e){}
+}
+
+// ============================================================
+// MANUAL BOOKING
+// ============================================================
+function showManualBooking(){
+  document.getElementById('manualForm').style.display='block';
+  const daysSel=document.getElementById('mDay');
+  daysSel.innerHTML='<option value="">اختار اليوم</option>';
+  getNext7Days().forEach(d=>{
+    const key=makeDateKey(d);
+    const label=makeLabel(d);
+    const opt=document.createElement('option');
+    opt.value=key;opt.textContent=label;opt.dataset.label=label;
+    daysSel.appendChild(opt);
+  });
+  document.getElementById('mSlot').innerHTML='<option value="">اختار اليوم أولاً</option>';
+}
+
+function hideManualBooking(){
+  document.getElementById('manualForm').style.display='none';
+  document.getElementById('mName').value='';
+  document.getElementById('mService').value='';
+  document.getElementById('mDay').value='';
+  document.getElementById('mSlot').innerHTML='<option value="">اختار اليوم أولاً</option>';
+}
+
+function updateManualSlots(){
+  const dateKey=document.getElementById('mDay').value;
+  const slotSel=document.getElementById('mSlot');
+  slotSel.innerHTML='<option value="">اختار الساعة</option>';
+  if(!dateKey)return;
+  SLOT_ORDER.forEach(slot=>{
+    const booked=data.bookings.some(b=>b.dateKey===dateKey&&b.slot===slot&&!b.cancelled);
+    const opt=document.createElement('option');
+    opt.value=slot;
+    opt.textContent=booked?`${slot} — محجوز ❌`:slot;
+    if(booked) opt.disabled=true;
+    slotSel.appendChild(opt);
+  });
+}
+
+async function saveManualBooking(){
+  const name=document.getElementById('mName').value.trim();
+  const svcEl=document.getElementById('mService');
+  const svc=svcEl.value;
+  const price=svcEl.options[svcEl.selectedIndex]?.dataset?.price||0;
+  const dayEl=document.getElementById('mDay');
+  const dateKey=dayEl.value;
+  const dateLabel=dayEl.options[dayEl.selectedIndex]?.dataset?.label||'';
+  const slot=document.getElementById('mSlot').value;
+  if(!name){showToast('⚠️ أدخل اسم الزبون');return;}
+  if(!svc){showToast('⚠️ اختار الخدمة');return;}
+  if(!dateKey){showToast('⚠️ اختار اليوم');return;}
+  if(!slot){showToast('⚠️ اختار الساعة');return;}
+  const booking={
+    id:'b'+Date.now(),name,phone:'📞 هاتف',
+    service:svc,price:Number(price),
+    dateKey,dateLabel,slot,day:dateLabel,
+    createdAt:Date.now(),
+    bookedAt:new Date().toLocaleTimeString('ar-IQ'),
+    reminded:true,cancelled:false,cancelledAt:null,
+    waSent:true,manual:true
+  };
+  data.bookings.push(booking);
+  try{
+    await saveData();
+    hideManualBooking();render();
+    showToast(`✅ تم حجز ${name} — ${slot}`);
+    sendTelegram(`📞 <b>حجز يدوي</b>\n\n👤 ${name}\n✂️ ${svc}\n📅 ${dateLabel}\n⏰ ${slot}`);
+  }catch(e){data.bookings.pop();showToast('❌ فشل الحفظ');}
 }
 
 // ============================================================
