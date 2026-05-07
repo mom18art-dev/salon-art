@@ -561,7 +561,13 @@ async function testTelegram(){
 // ============================================================
 // DATA
 // ============================================================
-function makeDateKey(d){ return d.toISOString().split('T')[0]; }
+function makeDateKey(d){
+  // استخدم التوقيت المحلي بدل UTC
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
 function makeLabel(d){ return `${DAY_NAMES[d.getDay()]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`; }
 function formatPrice(p){ return Number(p).toLocaleString('ar-IQ')+' د.ع'; }
 function getNext7Days(){

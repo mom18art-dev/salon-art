@@ -241,7 +241,12 @@ let data={bookings:[],waitlist:[],disabledDays:[]};
 let selService=null,selDateKey=null,selDateLabel=null,selSlot=null;
 let isSaving=false;
 
-function makeDateKey(d){ return d.toISOString().split('T')[0]; }
+function makeDateKey(d){
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
 function makeLabel(d){ return `${DAY_NAMES[d.getDay()]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`; }
 function formatPrice(p){ return Number(p).toLocaleString('ar-IQ')+' د.ع'; }
 
@@ -330,7 +335,12 @@ function isSlotPast(dateKey,slot){
 
 function isBooked(dateKey,slot){return data.bookings.some(b=>b.dateKey===dateKey&&b.slot===slot&&!b.cancelled);}
 function phoneBooked(p){return data.bookings.some(b=>b.phone===p&&!b.cancelled);}
-function allSlotsBooked(dateKey){return SLOTS.every(s=>isBooked(dateKey,s)||isSlotPast(dateKey,s));}
+// كل الأوقات محجوزة = كل الساعات المتاحة (غير الفايتة) محجوزة فعلاً
+function allSlotsBooked(dateKey){
+  const available=SLOTS.filter(s=>!isSlotPast(dateKey,s));
+  if(available.length===0) return true; // كل الساعات فاتت
+  return available.every(s=>isBooked(dateKey,s));
+}
 
 function showToast(msg){
   const t=document.getElementById('toast');
