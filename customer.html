@@ -235,7 +235,7 @@ const SLOT_HOURS = {"5:00 م":17,"6:00 م":18,"7:00 م":19,"8:00 م":20,"9:00 م
 const DAY_NAMES  = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
 const MONTH_NAMES= ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
 const SERVICES   = [
-  {id:'full',  name:'حلاقة كاملة', price:15000},
+  {id:'full',  name:'حلاقة كاملة', price:'15000-25000'},
   {id:'beard', name:'تحديد ولحية', price:10000},
   {id:'wash',  name:'شسوار',        price:5000},
   {id:'child', name:'طفل',          price:10000},
@@ -252,7 +252,7 @@ function makeDateKey(d){
   return `${y}-${m}-${day}`;
 }
 function makeLabel(d){return `${DAY_NAMES[d.getDay()]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`;}
-function formatPrice(p){return Number(p).toLocaleString('ar-IQ')+' د.ع';}
+function formatPrice(p){if(typeof p==='string'&&p.includes('-')){const[a,b]=p.split('-');return Number(a).toLocaleString('ar-IQ')+' - '+Number(b).toLocaleString('ar-IQ')+' د.ع';}return Number(p).toLocaleString('ar-IQ')+' د.ع';}
 
 function getNext7Days(){
   const days=[];const today=new Date();today.setHours(0,0,0,0);
