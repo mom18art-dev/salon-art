@@ -281,7 +281,7 @@ async function loadData(){
         bookings:     typeof raw.bookings==='string'     ? JSON.parse(raw.bookings)     : (raw.bookings||[]),
         waitlist:     typeof raw.waitlist==='string'     ? JSON.parse(raw.waitlist)     : (raw.waitlist||[]),
         disabledDays: typeof raw.disabledDays==='string' ? JSON.parse(raw.disabledDays) : (raw.disabledDays||[]),
-        workHours:    raw.workHours||{start:"5:00 م",end:"11:00 م"},
+        workHours:    typeof raw.workHours==='string' ? JSON.parse(raw.workHours) : (raw.workHours||{start:"5:00 م",end:"11:00 م"}),
       };
     }else{
       data={bookings:[],waitlist:[],disabledDays:[],workHours:{start:"5:00 م",end:"11:00 م"}};
@@ -295,7 +295,7 @@ async function saveData(){
       bookings:     JSON.stringify(data.bookings||[]),
       waitlist:     JSON.stringify(data.waitlist||[]),
       disabledDays: JSON.stringify(data.disabledDays||[]),
-      workHours:    data.workHours||{start:"5:00 م",end:"11:00 م"},
+      workHours:    JSON.stringify(data.workHours||{start:"5:00 م",end:"11:00 م"}),
     });
   }catch(e){console.error('saveData:',e);throw e;}
 }
