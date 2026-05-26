@@ -712,7 +712,7 @@ async function loadData(){
         waitlist:         typeof raw.waitlist==='string'         ? JSON.parse(raw.waitlist)         : (raw.waitlist||[]),
         disabledDays:     typeof raw.disabledDays==='string'     ? JSON.parse(raw.disabledDays)     : (raw.disabledDays||[]),
         archivedBookings: typeof raw.archivedBookings==='string' ? JSON.parse(raw.archivedBookings) : (raw.archivedBookings||[]),
-        workHours:        typeof raw.workHours==='string' ? JSON.parse(raw.workHours) : (raw.workHours||{start:"5:00 م",end:"11:00 م"}),
+        workHours:        {start: raw.workHoursStart||"5:00 م", end: raw.workHoursEnd||"11:00 م"},
       };
     }else{
       data={bookings:[],waitlist:[],disabledDays:[],archivedBookings:[],workHours:{start:"5:00 م",end:"11:00 م"}};
@@ -741,7 +741,8 @@ async function saveData(){
       waitlist:         JSON.stringify(data.waitlist||[]),
       disabledDays:     JSON.stringify(data.disabledDays||[]),
       archivedBookings: JSON.stringify(data.archivedBookings||[]),
-      workHours:        JSON.stringify(data.workHours||{start:"5:00 م",end:"11:00 م"}),
+      workHoursStart:   (data.workHours&&data.workHours.start)||"5:00 م",
+      workHoursEnd:     (data.workHours&&data.workHours.end)||"11:00 م",
     });
     lastSyncTime=new Date();
     updateSyncBar(true);
