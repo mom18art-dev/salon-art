@@ -676,17 +676,21 @@ async function loadData(){
   try{
     const snap=await getDoc(DOC_REF);
     if(snap.exists()){
-      data=snap.data();
+      const raw=snap.data();
+      data={
+        bookings:         typeof raw.bookings==='string'         ? JSON.parse(raw.bookings)         : (raw.bookings||[]),
+        waitlist:         typeof raw.waitlist==='string'         ? JSON.parse(raw.waitlist)         : (raw.waitlist||[]),
+        disabledDays:     typeof raw.disabledDays==='string'     ? JSON.parse(raw.disabledDays)     : (raw.disabledDays||[]),
+        archivedBookings: typeof raw.archivedBookings==='string' ? JSON.parse(raw.archivedBookings) : (raw.archivedBookings||[]),
+      };
     }else{
       data={bookings:[],waitlist:[],disabledDays:[],archivedBookings:[]};
     }
-    if(!data.bookings)         data.bookings=[];
-    if(!data.waitlist)         data.waitlist=[];
-    if(!data.disabledDays)     data.disabledDays=[];
-    if(!data.archivedBookings) data.archivedBookings=[];
     lastSyncTime=new Date();
     updateSyncBar(true);
   }catch(e){
+    console.error('Firebase loadData error:',e);
+    if(!data){data={bookings:[],waitlist:[],disabledDays:[],archivedBookings:[]};}
     updateSyncBar(false);
     showToast('❌ خطأ في تحميل البيانات');
   }
@@ -700,10 +704,16 @@ function validateData(d){
 async function saveData(){
   if(!validateData(data)){showToast('❌ خطأ في هيكل البيانات');throw new Error('invalid data');}
   try{
-    await setDoc(DOC_REF,data);
+    await setDoc(DOC_REF,{
+      bookings:         JSON.stringify(data.bookings||[]),
+      waitlist:         JSON.stringify(data.waitlist||[]),
+      disabledDays:     JSON.stringify(data.disabledDays||[]),
+      archivedBookings: JSON.stringify(data.archivedBookings||[]),
+    });
     lastSyncTime=new Date();
     updateSyncBar(true);
   }catch(e){
+    console.error('saveData error:',e);
     updateSyncBar(false);
     showToast('❌ فشل حفظ البيانات');
     throw e;

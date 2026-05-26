@@ -333,22 +333,34 @@ async function loadData(){
   try{
     const snap=await getDoc(DOC_REF);
     if(snap.exists()){
-      data=snap.data();
+      const raw=snap.data();
+      data={
+        bookings:     typeof raw.bookings==='string'     ? JSON.parse(raw.bookings)     : (raw.bookings||[]),
+        waitlist:     typeof raw.waitlist==='string'     ? JSON.parse(raw.waitlist)     : (raw.waitlist||[]),
+        disabledDays: typeof raw.disabledDays==='string' ? JSON.parse(raw.disabledDays) : (raw.disabledDays||[]),
+      };
     }else{
       data={bookings:[],waitlist:[],disabledDays:[]};
     }
-    if(!data.bookings)     data.bookings=[];
-    if(!data.waitlist)     data.waitlist=[];
-    if(!data.disabledDays) data.disabledDays=[];
   }catch(e){
-    showToast('❌ خطأ في الاتصال، تحقق من الإنترنت');
+    console.error('Firebase error:',e);
+    data={bookings:[],waitlist:[],disabledDays:[]};
+    showToast('❌ خطأ في الاتصال - تحقق من الإنترنت');
+  }finally{
+    document.getElementById('loadingScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
   }
 }
 
 async function saveData(){
   try{
-    await setDoc(DOC_REF,data);
+    await setDoc(DOC_REF,{
+      bookings: JSON.stringify(data.bookings||[]),
+      waitlist: JSON.stringify(data.waitlist||[]),
+      disabledDays: JSON.stringify(data.disabledDays||[]),
+    });
   }catch(e){
+    console.error('saveData error:',e);
     showToast('❌ فشل حفظ البيانات، حاول مرة ثانية');
     throw e;
   }
@@ -918,8 +930,6 @@ function resetForm(){
 
 (async()=>{
   await loadData();
-  document.getElementById('loadingScreen').style.display='none';
-  document.getElementById('mainApp').style.display='block';
   renderServices();renderDays();
   document.getElementById('nameInp').addEventListener('input',updateBtn);
   document.getElementById('phoneInp').addEventListener('input',updateBtn);
