@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>مسح الحجوزات</title>
+<style>
+body{font-family:'Tajawal',sans-serif;background:#080808;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;}
+.box{background:#111;border:1px solid #333;border-radius:16px;padding:32px 24px;text-align:center;max-width:340px;width:90%;}
+h2{color:#e05050;margin-bottom:8px;}
+p{font-size:13px;color:#666;margin-bottom:24px;line-height:1.7;}
+.btn{width:100%;padding:14px;border:none;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;}
+.btn-red{background:#c04040;color:#fff;}
+.btn-gray{background:#222;color:#888;border:1px solid #333;}
+.result{margin-top:16px;font-size:14px;font-weight:700;padding:12px;border-radius:10px;display:none;}
+.ok{background:#0a2a0a;color:#5aba5a;border:1px solid #2a5a2a;}
+.err{background:#2a0808;color:#e05050;border:1px solid #5a1010;}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>⚠️ مسح الحجوزات</h2>
+  <p>سيتم مسح كل الحجوزات الحالية نهائياً من القاعدة.<br/>لا يمكن التراجع عن هذا الإجراء.</p>
+  <button class="btn btn-red" onclick="clearAll()">🗑️ مسح كل الحجوزات</button>
+  <button class="btn btn-gray" onclick="window.close()">إلغاء</button>
+  <div class="result" id="result"></div>
+</div>
+<script>
+async function clearAll(){
+  if(!confirm('تأكيد — مسح كل الحجوزات؟'))return;
+  const BIN_ID='69f53bd4aaba8821975f4502';
+  const API_KEY='$2a$10$xxo3kGCW6jGSoHj3200WmOpkK4wI88Bm9Ac6MBYaMAGMH0k6Ggwum';
+  const res=document.getElementById('result');
+  try{
+    // اقرأ البيانات الحالية أول
+    const r=await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`,{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
+    const current=await r.json();
+    // احتفظ بباقي البيانات وامسح الحجوزات فقط
+    const newData={
+      ...current,
+      bookings:[],
+      waitlist:[]
+    };
+    const w=await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
+      body:JSON.stringify(newData)
+    });
+    if(w.ok){
+      res.className='result ok';
+      res.textContent='✅ تم مسح كل الحجوزات وقائمة الانتظار بنجاح!';
+      res.style.display='block';
+    }else{
+      throw new Error('فشل الحفظ');
+    }
+  }catch(e){
+    res.className='result err';
+    res.textContent='❌ خطأ: '+e.message;
+    res.style.display='block';
+  }
+}
+</script>
+</body>
+</html>
