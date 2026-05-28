@@ -357,6 +357,27 @@ function renderSlots(){
   });
 }
 
+// ── إشعارات للحلاق ──
+async function sendTelegram(msg){
+  try{
+    await fetch('https://api.telegram.org/bot8205449854:AAEy8543td3uSxq7L96y09B73UKn0wwdBZE/sendMessage',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:'7706249764',text:msg,parse_mode:'HTML'})
+    });
+  }catch(e){}
+}
+async function sendNtfy(msg){
+  try{
+    await fetch('https://ntfy.sh/salonart-mom18',{
+      method:'POST',
+      headers:{'Title':'Salon Art','Priority':'high','Tags':'scissors'},
+      body:msg
+    });
+  }catch(e){}
+}
+function notify(msg){ sendTelegram(msg); sendNtfy(msg); }
+
 async function handleBook(){
   if(isSaving)return;
   const name=document.getElementById('nameInp').value.trim();
@@ -378,6 +399,7 @@ async function handleBook(){
     await saveData();
     // إشعار تيليغرام + ntfy
     const notifMsg=`🎉 حجز جديد — Salon Art\n\n👤 ${name}\n✂️ ${svc.name}\n📅 ${selDateLabel}\n⏰ ${selSlot}\n💰 ${formatPrice(svc.price)}\n📞 ${phone}`;
+    notify(notifMsg);
     document.getElementById('s-name').textContent=name;
     document.getElementById('s-service').textContent=svc.name;
     document.getElementById('s-date').textContent=selDateLabel;
@@ -399,6 +421,7 @@ async function handleWaitlist(){
   data.waitlist.push({id:'w'+Date.now(),name,phone,day:selDateLabel,dateKey:selDateKey,createdAt:Date.now()});
   try{
     await saveData();
+    notify(`⏳ <b>انتظار جديد</b>\n👤 ${name}\n📅 ${selDateLabel}\n📞 ${phone}`);
     document.getElementById('w-day').textContent=selDateLabel;
     document.getElementById('formView').classList.add('hidden');
     document.getElementById('waitlistView').classList.remove('hidden');
