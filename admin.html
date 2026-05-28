@@ -483,6 +483,13 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
         </div>
       </div>
 
+      <!-- مسح كل الحجوزات -->
+      <div class="setting-card" style="border-color:#e0505033;margin-bottom:12px;">
+        <div class="setting-title" style="color:#e05050;">⚠️ منطقة الخطر</div>
+        <div style="font-size:12px;color:#555;margin-bottom:12px;line-height:1.7;">مسح كل الحجوزات نهائياً من القاعدة.</div>
+        <button onclick="clearAllBookings()" style="width:100%;padding:12px;background:#2a0808;border:1px solid #e05050;border-radius:9px;color:#e05050;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">🗑️ مسح كل الحجوزات</button>
+      </div>
+
       <!-- تعطيل الأيام -->
       <div class="setting-card">
         <div class="setting-title">📅 تعطيل يوم</div>
@@ -832,27 +839,37 @@ async function remind(id){
 async function cancelBooking(id){
   if(!confirm('هل تريد إلغاء هذا الحجز؟'))return;
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
-  b.cancelled=true;b.cancelledAt=Date.now();
+  const backup=[...data.bookings];
+  data.bookings=data.bookings.filter(x=>x.id!==id);
   try{
     await saveData();render();
     showToast(`🗑️ تم إلغاء موعد ${b.name}`);
-    // FIX: إزالة الإرسال المزدوج
-    notify('إلغاء حجز 🗑️',`إلغاء حجز\n👤 ${b.name}\n✂️ ${b.service}\n📅 ${b.dateLabel||b.day}\n⏰ ${b.slot}`);
-  }catch(e){b.cancelled=false;b.cancelledAt=null;}
+  }catch(e){data.bookings=backup;showToast('❌ فشل الإلغاء');}
 }
 
 async function cancelLate(id){
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
   const mins=lateMin(b);
-  b.cancelled=true;b.cancelledAt=Date.now();b.cancelReason='late';
+  const backup=[...data.bookings];
+  data.bookings=data.bookings.filter(x=>x.id!==id);
   try{
     await saveData();render();
-    showToast(`⛔ أُلغي حجز ${b.name} بسبب التأخر`);
-    notify('إلغاء بسبب التأخر ⛔',`إلغاء بسبب التأخر\n👤 ${b.name} — تأخر ${mins} دقيقة\n⏰ ${b.slot}`);
-  }catch(e){b.cancelled=false;b.cancelledAt=null;b.cancelReason=null;}
+    showToast(`⛔ أُلغي حجز ${b.name} بسبب التأخر ${mins} دقيقة`);
+  }catch(e){data.bookings=backup;showToast('❌ فشل الإلغاء');}
 }
 
 // FIX: markArrived يؤرشف بدل الحذف
+async function clearAllBookings(){
+  if(!confirm('⚠️ مسح كل الحجوزات نهائياً؟'))return;
+  if(!confirm('تأكيد أخير — لا يمكن التراجع!'))return;
+  const backup=[...data.bookings];
+  data.bookings=[];
+  try{
+    await saveData();render();
+    showToast('✅ تم مسح كل الحجوزات');
+  }catch(e){data.bookings=backup;showToast('❌ فشل المسح');}
+}
+
 async function markArrived(id){
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
   if(!confirm(`✅ تأكيد وصول ${b.name}؟`))return;
