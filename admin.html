@@ -312,7 +312,7 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#080808;color:#f0
           <input id="mPhone" class="setting-inp" placeholder="رقم الهاتف (اختياري)..." maxlength="13" type="tel"/>
           <select id="mService" class="setting-inp">
             <option value="">اختار الخدمة</option>
-            <option value="حلاقة كاملة" data-price="15000">حلاقة كاملة — 15,000 - 25,000</option>
+            <option value="حلاقة كاملة" data-price="15000">حلاقة كاملة — 15,000</option>
             <option value="تحديد ولحية" data-price="10000">تحديد ولحية — 10,000</option>
             <option value="شسوار" data-price="5000">شسوار — 5,000</option>
             <option value="طفل" data-price="10000">طفل — 10,000</option>
@@ -832,26 +832,24 @@ async function remind(id){
 async function cancelBooking(id){
   if(!confirm('هل تريد إلغاء هذا الحجز؟'))return;
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
-  const backup=[...data.bookings];
-  // امسح نهائياً من المصفوفة
-  data.bookings=data.bookings.filter(x=>x.id!==id);
+  b.cancelled=true;b.cancelledAt=Date.now();
   try{
     await saveData();render();
     showToast(`🗑️ تم إلغاء موعد ${b.name}`);
+    // FIX: إزالة الإرسال المزدوج
     notify('إلغاء حجز 🗑️',`إلغاء حجز\n👤 ${b.name}\n✂️ ${b.service}\n📅 ${b.dateLabel||b.day}\n⏰ ${b.slot}`);
-  }catch(e){data.bookings=backup;showToast('❌ فشل الإلغاء');}
+  }catch(e){b.cancelled=false;b.cancelledAt=null;}
 }
 
 async function cancelLate(id){
   const b=data.bookings.find(x=>x.id===id);if(!b)return;
   const mins=lateMin(b);
-  const backup=[...data.bookings];
-  data.bookings=data.bookings.filter(x=>x.id!==id);
+  b.cancelled=true;b.cancelledAt=Date.now();b.cancelReason='late';
   try{
     await saveData();render();
     showToast(`⛔ أُلغي حجز ${b.name} بسبب التأخر`);
     notify('إلغاء بسبب التأخر ⛔',`إلغاء بسبب التأخر\n👤 ${b.name} — تأخر ${mins} دقيقة\n⏰ ${b.slot}`);
-  }catch(e){data.bookings=backup;showToast('❌ فشل الإلغاء');}
+  }catch(e){b.cancelled=false;b.cancelledAt=null;b.cancelReason=null;}
 }
 
 // FIX: markArrived يؤرشف بدل الحذف
