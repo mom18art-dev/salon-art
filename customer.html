@@ -82,14 +82,6 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 .loading-screen p{margin-top:16px;color:#b0a090;font-size:14px;}
 .hidden{display:none;}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#111;color:#c9a84c;padding:12px 28px;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;z-index:999;white-space:nowrap;display:none;box-shadow:0 4px 24px #0008;}
-
-/* لوگو متحرك في أعلى اليمين */
-.corner-logo{position:fixed;top:14px;right:14px;z-index:1000;width:52px;height:52px;cursor:pointer;}
-.corner-logo .ring-outer{animation:spin-slow 8s linear infinite;}
-.corner-logo .ring-inner{animation:spin-slow 5s linear infinite reverse;}
-.corner-logo .scissors{animation:scissors-pulse 2s ease-in-out infinite;}
-@keyframes spin-slow{from{transform:rotate(0deg);}to{transform:rotate(360deg)}}
-@keyframes scissors-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
 </style>
 </head>
 <body>
@@ -107,7 +99,8 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
     <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=85&fit=crop&crop=center" 
          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;" 
          alt=""/>
-    <div class="logo-ring" style="position:absolute;top:0;right:0;z-index:10;margin:0;width:70px;height:70px;">
+    <div class="header-inner">
+    <div class="logo-ring">
       <svg class="logo-svg" viewBox="0 0 160 160" fill="none">
         <circle cx="80" cy="80" r="72" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
         <circle cx="80" cy="80" r="63" stroke="#c9a84c" stroke-width="0.5" opacity="0.3" fill="none"/>
@@ -119,7 +112,6 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
         <circle cx="80" cy="77" r="2.8" fill="#c9a84c"/>
       </svg>
     </div>
-    <div class="header-inner">
     <div class="brand">SALON <span>ART</span></div>
     <span class="brand-sub">✦ احجز موعدك ✦</span>
     <div class="header-desc" id="headerDesc">من 5 مساءً حتى 11 ليلاً</div>
@@ -206,7 +198,6 @@ body{font-family:'Tajawal',sans-serif;direction:rtl;background:#f7f3ee;min-heigh
 </div>
 
 <div class="toast" id="toast"></div>
-
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
