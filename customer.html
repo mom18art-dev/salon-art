@@ -392,14 +392,14 @@ async function handleBook(){
   try{
     await saveData();
     // إشعار تيليغرام + ntfy
-    const notifMsg=`🎉 حجز جديد — Salon Art\n\n👤 ${name}\n✂️ ${svc.name}\n📅 ${selDateLabel}\n⏰ ${selSlot}\n💰 ${formatPrice(svc.price)}\n📞 ${phone}`;
+    const notifMsg=`🎉 حجز جديد — Salon Art\n\n👤 ${name}\n✂️ ${svc.name}\n📅 ${selDateLabel}\n⏰ ${selSlot}\n💰 ${svc.priceLabel?svc.priceLabel:formatPrice(svc.price)}\n📞 ${phone}`;
     notify(notifMsg);
     document.getElementById('s-name').textContent=name;
     document.getElementById('s-service').textContent=svc.name;
     document.getElementById('s-date').textContent=selDateLabel;
     document.getElementById('s-slot').textContent=selSlot;
     document.getElementById('s-phone').textContent=phone;
-    document.getElementById('s-price').textContent=formatPrice(svc.price);
+    const priceDisplay=svc.priceLabel?svc.priceLabel:formatPrice(svc.price);document.getElementById('s-price').textContent=priceDisplay;
     document.getElementById('formView').classList.add('hidden');
     document.getElementById('successView').classList.remove('hidden');
   }catch{data.bookings.pop();btn.disabled=false;btn.textContent=`✦ احجز ${selSlot}`;showToast('❌ فشل الحفظ');}
